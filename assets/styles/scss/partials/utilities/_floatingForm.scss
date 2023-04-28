@@ -1,0 +1,68 @@
+.floating_form {
+    position: relative;
+    color: var(--accent);
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    .form-control {
+        color: inherit;
+        font-size: inherit;
+        background: transparent;
+        padding: 0.5em 1em;
+        border: 1px solid var(--primary--dark);
+        &[type="password"] {
+            padding-right: 2em;
+        }
+        // &[type="file"] {
+        //     cursor: pointer;
+        // }
+        &::file-selector-button {
+            background: var(--primary) !important;
+            color: var(--accent);
+            border-radius: 0.25rem;
+        }
+        &::placeholder {
+            opacity: 0;
+        }
+        &:is(:focus) {
+            box-shadow: 0 0 0 0.25em var(--primary--light);
+        }
+        &:is(:focus, :not(:placeholder-shown)) + .floating_label {
+            top: 0;
+            font-size: 0.75em;
+            padding: 0 0.5em;
+            color: var(--primary);
+        }
+    }
+    .icon {
+        color: inherit;
+        position: absolute;
+        top: 50%;
+        padding: 0.5em;
+        transform: translateY(-50%);
+    }
+    .show {
+        right: 0;
+        cursor: pointer;
+    }
+    .floating_label {
+        position: absolute;
+        background: inherit;
+        top: 50%;
+        left: 1em;
+        transform: translateY(-50%);
+        transition: 0.15s ease-in-out background, 0.15s ease-in-out top, 0.15s ease-in-out font-size,
+            0.15s ease-in-out color;
+        cursor: text;
+        text-transform: capitalize;
+    }
+}
+
+.form-title {
+    color: var(--primary);
+    text-align: center;
+}
+
+.btn-close {
+    &:focus {
+        box-shadow: 0 0 0 0.25em var(--primary--light) !important;
+    }
+}

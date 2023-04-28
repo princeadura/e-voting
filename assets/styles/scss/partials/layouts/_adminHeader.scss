@@ -1,0 +1,131 @@
+@use "./../components/responsive" as res;
+.admin-header {
+    background: var(--accent);
+    padding: 1rem;
+    box-shadow: 0 0 0.3rem 0.3rem var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    .right {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        text-transform: capitalize;
+    }
+    .open {
+        all: unset;
+        box-sizing: border-box;
+        font-size: 1.5rem;
+        transition: 0.5s ease-in-out color;
+        cursor: pointer;
+        &:hover {
+            color: var(--primary);
+        }
+        @include res.responsiveMedia(md) {
+            display: none;
+        }
+    }
+
+    .my-dropdown {
+        position: relative;
+        &.drop {
+            .my-dropdown-list {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            > .my-dropdown-toggle {
+                .icon {
+                    transform: rotateX(-180deg);
+                }
+            }
+        }
+        .my-dropdown-toggle {
+            .icon {
+                transition: 0.5s ease-in-out transform;
+            }
+        }
+        .my-dropdown-list {
+            position: absolute;
+            list-style: none;
+            padding: 0;
+            width: 15rem;
+            background: var(--accent);
+            border-radius: 0.25em;
+            top: 180%;
+            right: 0;
+            transform: translateY(5rem);
+            visibility: hidden;
+            opacity: 0;
+            border: 1px solid var(--primary--light);
+            transition: 0.5s ease-in-out transform, 0.5s ease-in-out visibility, 0.5s ease-in-out opacity;
+            transform-origin: top right;
+            &:before {
+                content: "";
+                position: absolute;
+                top: -5.5%;
+                right: 2rem;
+                border-top: 1px solid var(--primary--light);
+                border-left: 1px solid var(--primary--light);
+                width: 1.3rem;
+                height: 1.3rem;
+                transform: rotate(45deg);
+                background: var(--accent);
+            }
+        }
+        .my-dropdown-item {
+            all: unset;
+            box-sizing: border-box;
+            width: 100%;
+            display: inline-block;
+            padding: 1rem;
+            cursor: pointer;
+            transition: 0.25s ease-in-out color;
+            &:hover {
+                font-weight: bold;
+            }
+            &.active {
+                color: var(--secondary--dark);
+                background: var(--background--light);
+            }
+            &.info {
+                cursor: default;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                color: var(--dark) !important;
+                font-weight: normal !important;
+                .shortName {
+                    flex: 0.2 0 0;
+                }
+                p {
+                    flex: 1 0 0;
+                }
+            }
+        }
+        .my-dropdown-items {
+            &:not(:last-child) {
+                border-bottom: 0.05em solid var(--primary--light);
+            }
+        }
+        .my-dropdown-toggle {
+            all: unset;
+            box-sizing: border-box;
+            gap: 0.5rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .shortName {
+            background: var(--primary);
+            border-radius: 50%;
+            width: 2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1/1;
+        }
+    }
+}

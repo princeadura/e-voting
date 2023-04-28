@@ -1,0 +1,104 @@
+.settings {
+    display: grid;
+    padding: 1rem 0 0 0;
+    .container-lg {
+        max-width: 40rem;
+        height: 100%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        > .my-btn-primary {
+            width: max-content;
+            align-self: end;
+            margin: 0 0.4em;
+        }
+    }
+    .my-card {
+        border-radius: 0.25rem;
+        background: var(--accent);
+        overflow: hidden;
+        box-shadow: 0 0 0.3rem 0.4rem var(--shadow);
+        &-header {
+            border-bottom: 0.1rem solid lighten($color: #333333, $amount: 50%);
+            .setting-toggles {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+            .setting-toggle {
+                all: unset;
+                box-sizing: border-box;
+                color: var(--primary);
+                padding: 1rem;
+                cursor: pointer;
+                text-align: center;
+                width: 100%;
+                position: relative;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    height: 0.05rem;
+                    bottom: 0;
+                    background: var(--primary);
+                    transform: scale(0);
+                    transition: 0.25s ease-in-out transform;
+                }
+                &:focus {
+                    font-weight: bold;
+                }
+                &:hover {
+                    &:before {
+                        transform: scale(1);
+                    }
+                }
+                &.active {
+                    font-weight: bold;
+                    &:before {
+                        transform: scale(1);
+                    }
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        bottom: -0.5rem;
+                        right: 50%;
+                        aspect-ratio: 1.4/1;
+                        height: 0.5rem;
+                        background: var(--primary);
+                        border-radius: 0 0 50% 50%;
+                    }
+                }
+            }
+        }
+
+        &-body {
+            .alert {
+                margin: 1rem;
+                margin-bottom: 0;
+            }
+            .settings-form {
+                display: none;
+                margin: auto;
+                width: min(95%, 30rem);
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 2rem 0;
+                &.active {
+                    display: flex;
+                }
+                .floating_form {
+                    background: var(--accent);
+                    color: var(--dark);
+                }
+                > button {
+                    width: min(100%, 12rem);
+                    align-self: end;
+                }
+            }
+        }
+    }
+}

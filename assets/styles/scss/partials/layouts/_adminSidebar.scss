@@ -1,0 +1,118 @@
+@use "./../components/responsive" as res;
+@mixin sideLink {
+    all: unset;
+    box-sizing: border-box;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    transition: 0.25s ease-in-out background;
+    &:hover,
+    &:focus {
+        background: var(--primary--light);
+    }
+    &.active {
+        border-left: 0.3rem solid var(--accent);
+        background: var(--primary);
+        color: var(--background--dark);
+    }
+}
+.admin-sidebar {
+    color: var(--accent);
+    position: fixed;
+    transform: translateX(-100%);
+    top: 0;
+    bottom: 0;
+    background: var(--secondary--dark);
+    width: min(80%, 20rem);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    transition: 0.25s ease-in-out transform;
+    &.open {
+        transform: translateX(0);
+    }
+    @include res.responsiveMedia(md) {
+        transform: translateX(0);
+        transition: 0s ease-in-out transform;
+        position: sticky;
+        top: 0;
+        width: 20rem;
+    }
+
+    .top {
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
+        padding: 1rem;
+        text-align: center;
+        position: relative;
+        .logo {
+            all: unset;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .close {
+            all: unset;
+            box-sizing: border-box;
+            position: absolute;
+            right: 1rem;
+            top: 0.2rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.25s ease-in-out color;
+            &:hover {
+                color: var(--primary);
+            }
+            @include res.responsiveMedia(md) {
+                display: none;
+            }
+        }
+    }
+
+    .bottom {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1 0 0;
+        gap: 2rem;
+    }
+
+    .links-lists {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0;
+        .link {
+            @include sideLink();
+        }
+        .wrapper {
+            padding-top: 0.5rem;
+        }
+        .my-dropdown {
+            --height: 0;
+            overflow: hidden;
+            &.open {
+                > .my-dropdown-toggle {
+                    .icon {
+                        transform: rotateX(-180deg);
+                    }
+                }
+            }
+            .my-dropdown-list {
+                transition: 0.25s ease-in-out height;
+                height: var(--height) !important;
+                padding: 0 0 0 1rem;
+            }
+            .my-dropdown-toggle {
+                @include sideLink();
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .icon {
+                    transition: 0.25s ease-in-out transform;
+                }
+            }
+        }
+    }
+}

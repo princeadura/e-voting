@@ -1,0 +1,10 @@
+.add-section {
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    padding-bottom: 0;
+    .floating_form {
+        background: var(--background);
+        color: var(--dark);
+    }
+}

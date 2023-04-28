@@ -1,0 +1,53 @@
+@use "./../components/colors" as clr;
+
+@mixin myButton($color) {
+    .my-btn-#{$color} {
+        all: unset;
+        box-sizing: border-box;
+        text-align: center;
+        background: var(--#{$color});
+        display: inline-block;
+        user-select: none;
+        color: var(--accent) !important;
+        cursor: pointer;
+        border-radius: 0.25rem;
+        padding: 0.5em 1em;
+        transition: 0.15s ease-in-out background, 0.15s ease-in-out box-shadow, 0.15s ease-in-out color;
+        font-size: clamp(1rem, 3vw, 1.2rem);
+        &:is(:hover, :focus) {
+            background: var(--#{$color}--dark);
+        }
+        &:focus {
+            box-shadow: 0 0 0 0.25em var(--#{$color}--light);
+        }
+        &:disabled {
+            background: var(--#{$color}--light);
+        }
+    }
+
+    .outline-#{$color} {
+        color: var(--#{$color}) !important;
+        border: 1px solid var(--#{$color});
+        background: transparent;
+        &:is(:hover, :focus) {
+            color: var(--accent) !important;
+            background: var(--#{$color}--dark);
+        }
+        &:focus {
+            box-shadow: 0 0 0 0.25em var(--#{$color}--light);
+        }
+        &:disabled {
+            color: var(--accent) !important;
+            border-color: transparent;
+            background: var(--#{$color}--light);
+        }
+    }
+}
+.btn {
+    font-size: clamp(1rem, 3vw, 1.2rem) !important;
+    padding: 0.5em 1em;
+}
+
+@each $name, $color in clr.$colors {
+    @include myButton($name);
+}

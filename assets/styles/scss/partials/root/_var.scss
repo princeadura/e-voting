@@ -1,0 +1,12 @@
+@use "./../components/colors" as clr;
+
+:root {
+    @each $name, $color in clr.$colors {
+        --#{$name}: #{$color};
+        --#{$name}--light: #{$color}65;
+        --#{$name}--dark: #{darken($color, 10%)};
+    }
+    --accent: #ffffff;
+    --dark: #333333;
+    --shadow: #00000012;
+}

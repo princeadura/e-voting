@@ -1,0 +1,21 @@
+.administartorModal {
+    .modal-body {
+        font-size: clamp(1.1rem, 3vw, 1.5rem);
+        display: flex;
+        flex-direction: column;
+        // flex-wrap: wrap;
+        .indent {
+            text-indent: 1.3em;
+        }
+        .list {
+            color: var(--primary--dark);
+        }
+        .unordered {
+            list-style: square;
+        }
+        a {
+            width: max-content;
+            align-self: end;
+        }
+    }
+}

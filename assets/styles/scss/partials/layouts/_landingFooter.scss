@@ -1,0 +1,80 @@
+@use "./../components/responsive" as res;
+.landing-footer {
+    background: var(--secondary--dark);
+    color: var(--accent);
+    .contact {
+        padding: 1.5rem;
+        margin: auto;
+        width: min(100%, 60rem);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background: inherit;
+        .fields {
+            display: grid;
+            grid-template-areas: "input1" "input2" "message";
+            gap: 1.3rem;
+            @include res.responsiveMedia(md) {
+                grid-template-areas: "input1 message" "input2 message" "... message";
+            }
+            .floating_form {
+                background: var(--secondary--dark);
+                &:first-of-type {
+                    grid-area: input1;
+                }
+                &:nth-of-type(2) {
+                    grid-area: input2;
+                }
+                &:nth-of-type(3) {
+                    grid-area: message;
+                }
+            }
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            width: max-content;
+            align-self: end;
+        }
+    }
+    .footer-bottom {
+        border-top: 1px solid var(--primary);
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        flex-direction: column-reverse;
+        gap: 1.6rem;
+        text-align: center;
+        @include res.responsiveMedia(md) {
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+            .icons {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                gap: 1rem;
+                .icon {
+                    cursor: pointer;
+                    transition: 0.15s ease-in-out transform;
+                    .link-primary {
+                        font-size: 1.5rem;
+                    }
+                    &:hover {
+                        transform: translateY(-30%);
+                    }
+                }
+            }
+        }
+    }
+}

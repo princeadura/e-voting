@@ -1,0 +1,49 @@
+.hamburger {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 2rem;
+    height: 1.4rem;
+    position: relative;
+    transition: 0.5s ease-in-out transform;
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        right: 0;
+        width: 100%;
+        height: 0.25em;
+        background: var(--primary);
+        border-radius: 0.25em;
+        transition: 0.5s ease-in-out width, 0.5s ease-in-out transform, 0.5s ease-in-out opacity;
+    }
+    &:before {
+        top: 0;
+    }
+    &:after {
+        bottom: 0;
+    }
+    .bar {
+        border-radius: 0.25em;
+        background: var(--primary);
+        width: 100%;
+        height: 0.25em;
+    }
+    &:is(:hover, :focus) {
+        &::before {
+            width: 70%;
+        }
+    }
+    &.open {
+        transform: rotate(225deg);
+        &:before {
+            opacity: 0;
+        }
+        &:after {
+            transform: rotate(-90deg) translateX(0.55em);
+        }
+    }
+}

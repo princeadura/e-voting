@@ -1,0 +1,33 @@
+.logout-modal {
+    .modal-dialog {
+        width: min(95%, 20rem);
+    }
+    .modal-body {
+        text-align: center;
+        position: relative;
+        padding-top: 2rem;
+        .btn-close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: clamp(1.2rem, 3vw, 1.1rem);
+        }
+        .message {
+            font-size: clamp(1.1rem, 3vw, 1.1rem);
+        }
+        .logo {
+            font-size: clamp(4rem, 12vw, 3rem);
+        }
+
+        .my-btn-group {
+            display: flex;
+            justify-content: space-around;
+            gap: 1rem;
+            a,
+            button {
+                flex: 1 0 0;
+                font-size: 1rem !important;
+            }
+        }
+    }
+}

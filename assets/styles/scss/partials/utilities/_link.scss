@@ -1,0 +1,37 @@
+@use "./../components/colors" as clr;
+
+@mixin link($color) {
+    .link-#{$color} {
+        all: unset;
+        box-sizing: border-box;
+        color: var(--#{$color});
+        cursor: pointer;
+        font-size: clamp(1.1rem, 3vw, 1.2rem);
+        transition: 0.25s ease-in-out color;
+        &:is(:hover, :focus) {
+            color: var(--#{$color}--light);
+        }
+    }
+    .nav-link-#{$color} {
+        position: relative;
+        &:before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0.05em;
+            background: var(--#{$color});
+            transition: 0.25s ease-in-out width;
+        }
+        &:is(:focus, :hover),
+        &.active {
+            &::before {
+                width: 100%;
+            }
+        }
+    }
+}
+@each $name, $color in clr.$colors {
+    @include link($name);
+}

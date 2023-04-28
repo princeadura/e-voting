@@ -1,0 +1,235 @@
+@use "./../../components/responsive" as res;
+.about {
+    .about-app {
+        padding: 2rem 1.5rem;
+        padding-top: 0;
+        .container {
+            display: flex;
+            gap: 2rem;
+            flex-direction: column;
+            @include res.responsiveMedia(md) {
+                flex-direction: row;
+            }
+        }
+        .title {
+            color: var(--primary);
+            flex: 0.8 0 0;
+            font-size: clamp(1.7rem, 3.5vw, 3rem);
+            font-weight: bolder;
+            span {
+                color: var(--secondary--dark);
+            }
+        }
+
+        &-content {
+            color: var(--dark);
+            flex: 1 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            .content-head {
+                font-weight: 650;
+            }
+            .content {
+                .link-secondary {
+                    font-size: inherit !important;
+                }
+            }
+        }
+    }
+
+    .mission-vision {
+        padding: 4rem 2rem;
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+
+            @include res.responsiveMedia(md) {
+                flex-direction: row;
+            }
+            > div {
+                background: var(--accent);
+                border-radius: 0.25rem;
+                flex: 1 0 0;
+                text-align: center;
+                padding: 2rem;
+                .icon {
+                    color: var(--primary);
+                    font-size: clamp(6rem, 3vw, 15rem);
+                    display: inline-block;
+                }
+                .title {
+                    color: var(--secondary);
+                    font-size: clamp(2rem, 3vw, 5rem);
+                }
+                .text {
+                    font-size: clamp(1.4rem, 3vw, 2rem);
+                }
+            }
+        }
+        .mission {
+            box-shadow: 0 0 0 0.5em var(--secondary--light);
+        }
+        .vision {
+            box-shadow: 0 0 0 0.5em var(--primary--light);
+        }
+    }
+
+    .team {
+        padding: 6rem 1.5rem;
+        padding-top: 0;
+
+        .title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        &-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.6rem), 1fr));
+            gap: 4rem 1rem;
+        }
+        &-member {
+            border-radius: 50px 0 50px 0;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 0.2rem 0.4rem var(--shadow);
+            position: relative;
+            cursor: pointer;
+            aspect-ratio: 1/1.1;
+            &-img {
+                width: 100%;
+                height: 100%;
+                border-radius: inherit;
+            }
+            &:hover {
+                .team-member-overlay {
+                    opacity: 1;
+                    .item {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                }
+                .label {
+                    color: var(--primary);
+                    &::before {
+                        width: 100%;
+                    }
+                }
+            }
+            .label {
+                position: absolute;
+                bottom: 0;
+                background: var(--secondary);
+                width: 60%;
+                left: 50%;
+                transform: translateX(-50%) translateY(50%) skew(-10deg);
+                z-index: 1;
+                font-size: 1rem !important;
+                text-align: center;
+                padding: 0.5rem;
+                color: var(--accent);
+                box-shadow: 0 0 0 0.3rem var(--primary--light);
+                border-radius: 0 20px 0 20px;
+                overflow: hidden;
+                transition: 0.25s ease-in-out color;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 0;
+                    height: 100%;
+                    z-index: -1;
+                    background: var(--accent);
+                    transition: 0.25s ease-in-out width;
+                }
+                .name {
+                    font-size: inherit;
+                    margin: 0;
+                    .link-primary {
+                        font-size: inherit;
+                        color: inherit;
+                    }
+                }
+                .role {
+                    font-size: inherit;
+                    margin: 0;
+                    font-size: 0.8em;
+                }
+            }
+            &-overlay {
+                position: absolute;
+                bottom: 0;
+                display: grid;
+                place-items: center;
+                top: 0;
+                font-size: inherit;
+                height: 100%;
+                width: 100%;
+                background: #000000aa;
+                opacity: 0;
+                border-radius: inherit;
+                transition: 0.25s ease-in-out opacity;
+                .item {
+                    background: var(--accent);
+                    color: var(--primary);
+                    box-shadow: 0 0 0.4rem 0.2rem var(--shadow);
+                    padding: 0.6em 1em;
+                    font-size: clamp(1.1rem, 3vw, 1.5rem);
+                    display: flex;
+                    transform: translateY(-100%) skewY(30deg);
+                    border-radius: 0.25rem;
+                    opacity: 0;
+                    transition: 0.25s ease-in-out transform, 0.25s ease-in-out opacity;
+                    gap: 1rem;
+                    .icon {
+                        all: unset;
+                        box-sizing: border-box;
+                        display: inline-block;
+                        transition: 0.25s ease-in-out color, 0.25s ease-in-out transform;
+                        font-size: inherit;
+                        position: relative;
+                        .tip {
+                            position: absolute;
+                            left: 50%;
+                            top: 0;
+                            transform: translateX(-50%);
+                            font-size: 0.6em;
+                            background: var(--primary);
+                            border-radius: 0.25rem;
+                            color: var(--accent);
+                            padding: 0.2em 0.4em;
+                            opacity: 0;
+                            transition: 0.25s ease-in-out opacity, 0.25s ease-in-out top;
+                            &::before {
+                                content: "";
+                                position: absolute;
+                                left: 50%;
+                                bottom: 0;
+                                transform: translateX(-50%) translateY(50%) rotate(45deg);
+                                width: 0.3rem;
+                                aspect-ratio: 1/1;
+                                background: var(--primary);
+                            }
+                        }
+                        &:is(:hover, :focus) {
+                            color: var(--primary--dark);
+                            transform: translateY(-20%);
+                        }
+                        &:hover {
+                            & > .tip {
+                                opacity: 1;
+                                top: -70%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

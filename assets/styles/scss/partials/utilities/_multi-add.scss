@@ -1,0 +1,17 @@
+.multi-add {
+    .fields {
+        display: grid;
+        gap: 1rem;
+        .my-btn-primary {
+            justify-self: end;
+        }
+    }
+
+    .info {
+        font-size: clamp(1rem, 3vw, 1.2rem) !important;
+        margin-top: 2em;
+        .notice {
+            font-weight: 900;
+        }
+    }
+}
