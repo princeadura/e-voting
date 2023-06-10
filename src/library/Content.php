@@ -44,9 +44,9 @@ class Content
     {
         return [
             [
-                "type" => "email",
-                "name" => "email",
-                "label" => "Email"
+                "type" => "text",
+                "name" => "username",
+                "label" => "Username"
             ],
             [
                 "type" => "password",
@@ -75,6 +75,21 @@ class Content
             ]
         ];
     }
+    public function resetPin(): array
+    {
+        return [
+            [
+                "type" => "password",
+                "name" => "password",
+                "label" => "Acount Password"
+            ],
+            [
+                "type" => "text",
+                "name" => "voting_pin",
+                "label" => "Pin"
+            ]
+        ];
+    }
 
     public function registerFields(): array
     {
@@ -98,6 +113,11 @@ class Content
                 "type" => "email",
                 "name" => "email",
                 "label" => "Email"
+            ],
+            [
+                "type" => "text",
+                "name" => "username",
+                "label" => "Username"
             ],
             [
                 "type" => "password",

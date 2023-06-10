@@ -1,0 +1,25 @@
+<li class="my-dropdown link-list <?= $page == "candidate-list" ? "open" : "" ?>" <?= $page == "candidate-list" ? " style='--height: 100%' " : "" ?>>
+<button class="my-dropdown-toggle link">
+    <span>
+        <i class="fas fa-user-tag"></i>
+        Candidates
+    </span>
+    <i class="fa fa-angle-down icon"></i>
+</button>
+<ul class="links-lists my-dropdown-list">
+    <div class="wrapper">
+        <li class="link-list">
+            <a href="/admin/candidate_list.php" class="link  <?= $subgroup == "candidatelist" ? "active" : "" ?>">
+                <i class=" fas fa-list"></i>
+                <span>Candidates List</span>
+            </a>
+        </li>
+        <li class="link-list">
+            <a href="#" class="link">
+                <i class="fas fa-user-plus"></i>
+                <span>Add Candidate</span>
+            </a>
+        </li>
+    </div>
+</ul>
+</li>

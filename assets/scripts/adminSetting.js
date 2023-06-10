@@ -25,6 +25,19 @@ $("#passwordReset").on("submit", async function (e) {
 	performAjax(this, "resetAdminPassword");
 });
 
+$("#voterPersonal").on("submit", async function (e) {
+	e.preventDefault();
+	performAjax(this, "editUser");
+});
+$("#voterPasswordReset").on("submit", async function (e) {
+	e.preventDefault();
+	performAjax(this, "resetVoterPassword");
+});
+$("#voterPinReset").on("submit", async function (e) {
+	e.preventDefault();
+	performAjax(this, "resetVoterPin");
+});
+
 async function performAjax(field, postName) {
 	try {
 		//declaring and asigning variables needed for the for execution.
@@ -61,6 +74,14 @@ async function performAjax(field, postName) {
 		//Conditional statement for when the ajax call is sucessfull or not
 		if (register.status == "success") {
 			form.parent().prepend(alert(message, "success"));
+			if (
+				postName == "resetAdminPassword" ||
+				postName == "resetVoterPassword"
+			) {
+				location.reload();
+			} else if (postName == "resetVoterPin") {
+				form.find("input").val("");
+			}
 		} else {
 			if (typeof message == "object") {
 				$.each(message, (i, el) => {

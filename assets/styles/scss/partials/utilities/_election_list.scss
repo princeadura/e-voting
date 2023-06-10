@@ -1,0 +1,94 @@
+.election_list_wrapper {
+    display           : grid;
+    grid-template-rows: auto 1fr;
+    --bgHex           : #ecf5f7;
+
+    .election_list_title {
+        padding   : 1em;
+        position  : sticky;
+        top       : var(--admin-header-height);
+        z-index   : 100;
+        background: var(--bgHex);
+    }
+
+    .election_list {
+        padding              : 1rem;
+        margin               : 0;
+        list-style           : none;
+        display              : grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+        align-content        : start;
+        gap                  : 1rem;
+        align-items          : end;
+
+        .election_item_wrapper {
+            position: relative;
+
+            .my-badge {
+                display      : block;
+                text-align   : right;
+                position     : absolute;
+                z-index      : 10;
+                right        : 2rem;
+                top          : -.5rem;
+                background   : var(--accent);
+                width        : 1.5rem;
+                aspect-ratio : 1/1;
+                text-align   : center;
+                border-radius: 50%;
+                box-shadow   : 0 0 .6rem .3rem var(--shadow);
+            }
+
+            .election_item {
+                color          : var(--accent);
+                text-decoration: none;
+                display        : flex;
+                outline        : none;
+
+                &:is(:hover, :focus) {
+                    .name {
+                        background: var(--primary--dark);
+                    }
+                }
+
+                .number {
+                    background   : var(--accent);
+                    height       : 3rem;
+                    aspect-ratio : 1/1;
+                    border-radius: 50%;
+                    display      : inline-grid;
+                    place-content: center;
+                    flex-shrink  : 0;
+                    position     : relative;
+                    z-index      : 1;
+                    color        : var(--dark);
+                    box-shadow   : 0 0 0.8rem 0.4rem var(--shadow);
+                }
+
+                .name {
+                    background    : var(--primary);
+                    display       : inline-grid;
+                    place-content : center;
+                    padding-inline: 2.3rem;
+                    border-radius : 0 50rem 50rem 0;
+                    width         : 100%;
+                    position      : relative;
+                    right         : 1.5rem;
+                    transition    : 0.25s ease-in-out background;
+
+                    &::after {
+                        content      : "";
+                        position     : absolute;
+                        top          : 50%;
+                        left         : -1rem;
+                        transform    : translateY(-50%);
+                        aspect-ratio : 1/1;
+                        height       : 110%;
+                        border-radius: 50%;
+                        background   : var(--bgHex);
+                    }
+                }
+            }
+        }
+    }
+}

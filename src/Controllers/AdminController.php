@@ -9,6 +9,8 @@ class AdminController
 
     public function login()
     {
+        session_destroy();
+        session_start();
         $empty = array_filter($this->fields, fn ($field) => empty($field));
         $data = $this->fields;
         if (count($empty) > 0) {
@@ -18,7 +20,7 @@ class AdminController
         unset($this->fields["password"]);
         $fetch = (new Admins())->fetchAll($this->fields);
         if (count($fetch) > 0 && password_verify($data["password"], $fetch[0]["password"])) {
-            $_SESSION["admin"] = $fetch[0]["email"];
+            $_SESSION["admin"] = $fetch[0]["username"];
             echo json_encode(["message" => "Details Sucessfully Verified", "status" => "success"]);
         } else {
             echo json_encode(["message" => "Invalid Username or Password", "status" => "error"]);
@@ -36,10 +38,31 @@ class AdminController
 
         if ($organization) {
             list($orgId) = (new Admins)->getMyDetail("organization");
+            $emails = array_map(fn ($detail) => $detail["email"], (new Admins)->fetchAll(["organization" => $orgId]));
+            if (in_array($this->fields["email"], $emails)) {
+                echo json_encode([
+                    "message" => [
+                        "email" => "email already exist as an Administrator of this Organization"
+                    ],
+                    "status" => "error"
+                ]);
+                return;
+            }
             $this->fields["password"] = password_hash(12345678, PASSWORD_DEFAULT);
             $this->fields["role"] = "regular";
             $this->fields["organization"] = $orgId;
+            $this->fields["username"] = $this->generateUsername();
         } else {
+            $emails = array_map(fn ($detail) => $detail["email"], (new Admins)->fetchAll(["role" => "head"]));
+            if (in_array($this->fields["email"], $emails)) {
+                echo json_encode([
+                    "message" => [
+                        "email" => "email already exist as an Administrator"
+                    ],
+                    "status" => "error"
+                ]);
+                return;
+            }
             $this->fields["password"] = password_hash($this->fields["password"], PASSWORD_DEFAULT);
         }
         unset($this->fields["confirm_password"]);
@@ -48,6 +71,17 @@ class AdminController
             echo json_encode(["message" => "Account Sucessfully Created Kindly login your account", "status" => "success"]);
         } else {
             echo json_encode(["message" => "An Error Occured", "status" => "error"]);
+        }
+    }
+
+    public function generateUsername()
+    {
+        $username = "admin" . str_pad(rand(0, 400), 4, "123");
+        $usernameExists = (new Admins)->count(["username" => $username]);
+        if ($usernameExists) {
+            $this->generateUsername();
+        } else {
+            return $username;
         }
     }
 
@@ -80,7 +114,7 @@ class AdminController
         $others = [
             "password" => password_hash(12345678, PASSWORD_DEFAULT),
             "organization" => $orgId,
-            "role" => "regular"
+            "role" => "regular",
         ];
 
         global $details;
@@ -92,7 +126,25 @@ class AdminController
             $others
         ), $body);
 
-        $emails = array_map(fn ($detail) => $detail["email"], (new Admins)->fetch());
+        function generateUniqueUsername()
+        {
+            global $details;
+            $generatedUsername = $generatedUsername = array_unique(array_map(fn ($detail) => (new AdminController([]))->generateUsername(), $details));
+            if (count($generatedUsername) == count($details)) {
+                return $generatedUsername;
+            } else {
+                generateUniqueUsername();
+            }
+        };
+        $usernames = generateUniqueUsername();
+        $newDetails = [];
+        foreach ($details as $key => $detail) {
+            $detail["username"] = $usernames[$key];
+            array_push($newDetails, $detail);
+        }
+        $details = $newDetails;
+        $emails = array_map(fn ($detail) => $detail["email"], (new Admins)->fetchAll(["organization" => $orgId]));
+        $importEmails = array_map(fn ($detail) => $detail["email"], $details);
         $emailExpression = "/^([a-zA-Z]+[\w.]+@[a-zA-Z]+\.[a-zA-Z]{2,})$/";
         $nameExpression = "/^[a-zA-Z_-]{3,}$/";
         $mnameExpression = "/^[a-zA-Z_-]*$/";
@@ -104,8 +156,8 @@ class AdminController
             );
         };
         $emailExists =  array_filter(
-            $details,
-            fn ($detail) => in_array($detail["email"], $emails)
+            $importEmails,
+            fn ($detail) => in_array($detail, $emails)
         );
 
         if (count($invalid($nameExpression, "firstname")) > 0) {
@@ -132,10 +184,18 @@ class AdminController
                 "status" => "error"
             ]);
             return;
+        } else if (count($importEmails) != count(array_unique($importEmails))) {
+            echo json_encode([
+                "message" => [
+                    "file" => "Some of the emails been uploaded are the same"
+                ],
+                "status" => "error"
+            ]);
+            return;
         } else if (count($emailExists) > 0) {
             echo json_encode([
                 "message" => [
-                    "file" => "Some of the emails already exists as an Administrator, Kindly contact the system's Administrator if error persists."
+                    "file" => "Some of the emails already exist as an Administrator of this Organization."
                 ],
                 "status" => "error"
             ]);
@@ -183,9 +243,10 @@ class AdminController
                 "password" => password_hash($this->fields["password"], PASSWORD_DEFAULT)
             ];
             $update = (new Admins)->update($data, [
-                "email" => $_SESSION["admin"]
+                "username" => $_SESSION["admin"]
             ]);
             if ($update) {
+                session_destroy();
                 echo json_encode(["message" => "Details Sucessfully Updated", "status" => "success"]);
             } else {
                 echo json_encode(["message" => "An Error Occured", "status" => "error"]);
@@ -205,7 +266,6 @@ class AdminController
             return;
         }
         $update = (new Admins)->update($this->fields, [
-            "email" => $_SESSION["admin"],
             "admin_id" => $_SESSION["admin_id"]
         ]);
         if ($update) {

@@ -25,9 +25,27 @@ class Auth
                         $error[$key] = ucfirst($key) . " can't contain numbers and spaces, must have a minimum of 3 character length and can only contain underscore and hyphens";
                     }
                     break;
+                case ("username"):
+                    if (!preg_match("/^[a-zA-Z-_]{3,}$/", $this->data[$key])) {
+                        $error[$key] = ucfirst($key) . " can't contain numbers and spaces, must have a minimum of 3 character length and can only contain hyphens";
+                    } else if ($this->register && $this->db->count([$key => $this->data[$key]]) > 0) {
+                        $error[$key] = $key . " already exists";
+                    }
+                    break;
+                case ("voting_pin"):
+                    $value = ucwords(implode(" ", explode("_", $key)));
+                    if (!preg_match("/^[0-9]{4,4}$/", $this->data[$key])) {
+                        $error[$key] = $value . " can only contain numbers and have a total of 4 character length.";
+                    }
+                    break;
                 case ("lastname"):
                     if (!preg_match("/^[a-zA-Z_-]{3,}$/", $this->data[$key])) {
                         $error[$key] = ucfirst($key) . " can't contain numbers and spaces, must have a minimum of 3 character length and can only contain underscore and hyphens";
+                    }
+                    break;
+                case ("position"):
+                    if (!preg_match("/^([A-Za-z]+[\w\- ]*){3,}$/", $this->data[$key])) {
+                        $error[$key] = ucfirst($key) . " can't contain numbers, must have a minimum of 3 character length and can only contain underscores and hyphens ";
                     }
                     break;
                 case ("username"):
@@ -38,8 +56,6 @@ class Auth
                 case ("email"):
                     if (!preg_match("/^([a-zA-Z]+[\w.]+@[a-zA-Z]+\.[a-zA-Z]{2,})$/", $this->data[$key])) {
                         $error[$key] = "Kindly Input a valid " . $key;
-                    } else if ($this->register && $this->db->count([$key => $this->data[$key]]) > 0) {
-                        $error[$key] = $key . " already exists";
                     }
                     break;
                 case ("middlename"):

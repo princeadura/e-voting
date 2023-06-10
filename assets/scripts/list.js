@@ -18,6 +18,14 @@ let organizationElection = async function () {
 	let result = await $.post("/src/request.php", data, null, "json");
 	return result;
 };
+let organizationVoter = async function () {
+	let data = {
+		organization: $("main").data("organization"),
+		getVoter: true,
+	};
+	let result = await $.post("/src/request.php", data, null, "json");
+	return result;
+};
 
 async function editAdmin(field) {
 	let email = $(field).data("email");
@@ -31,6 +39,19 @@ async function editAdmin(field) {
 	});
 	$("#editAdminForm").data({ id: clickedUser.admin_id });
 	$("#editAdmin").modal("show");
+}
+async function editVoter(field) {
+	let email = $(field).data("email");
+	let clickedUser = [...(await organizationVoter())].filter(
+		(el) => el.email == email
+	)[0];
+	let inputFields = [...$("#editUserForm input")];
+	inputFields.forEach((input) => {
+		let id = $(input).attr("id");
+		$(input).val(clickedUser[id]);
+	});
+	$("#editUserForm").data({ id: clickedUser.voter_id });
+	$("#editUser").modal("show");
 }
 
 async function disableAdmin(field) {
@@ -71,6 +92,19 @@ async function deleteAdmin(field) {
 	area.text(`${clickedUser.firstname} ${clickedUser.lastname}`);
 	$("#deleteAdmin").modal("show");
 }
+async function deleteVoter(field) {
+	let email = $(field).data("email");
+	let clickedUser = [...(await organizationVoter())].filter(
+		(el) => el.email == email
+	)[0];
+	let area = $("#deleteUser .user");
+	let button = $("#deleteUser .modal-body button");
+	button.data({
+		voter_id: clickedUser.voter_id,
+	});
+	area.text(`${clickedUser.firstname} ${clickedUser.lastname}`);
+	$("#deleteUser").modal("show");
+}
 async function editElection(field) {
 	let id = $(field).data("id");
 	let clickedElection = [...(await organizationElection())].filter(
@@ -103,4 +137,19 @@ async function deleteElection(field) {
 	$("#deleteElection").data({ id });
 	$("#deleteElection").find(".message").html(message);
 	$("#deleteElection").modal("show");
+}
+
+function openEditModal(me) {
+	let id = $(me).data("id");
+	let name = $(me).data("name");
+	$("#editPositionForm").data({ index_id: id });
+	$("#editPositionModal").find("#position").val(name);
+	$("#editPositionModal").modal("show");
+}
+function openDeleteModal(me) {
+	let id = $(me).data("id");
+	let name = $(me).data("name");
+	$("#deletePositionModal").find(".delete").data({ index_id: id });
+	$("#deletePositionModal").find(".position").text(name);
+	$("#deletePositionModal").modal("show");
 }

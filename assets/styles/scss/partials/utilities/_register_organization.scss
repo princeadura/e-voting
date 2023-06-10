@@ -1,0 +1,18 @@
+.register-organization {
+    padding    : 1rem;
+    display    : grid;
+    place-items: center;
+
+    .list-group {
+        box-shadow: 0 .3rem .8rem var(--shadow);
+    }
+
+    .list-group-item {
+        padding-block: 1rem;
+    }
+
+    .link-primary {
+        display   : block;
+        text-align: end;
+    }
+}

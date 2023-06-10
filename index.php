@@ -3,6 +3,7 @@
 $page = "home";
 $group = "landing";
 require_once __DIR__ . '/./src/request.php';
+require_once __DIR__ . '/./includes/head.php';
 $choose = (new Content)->choose();
 ?>
 <html lang="en">
@@ -24,7 +25,7 @@ $choose = (new Content)->choose();
                         <h1 class="hero-welcome">Welcome to the evolving evoting system</h1>
                         <h3> Where we provide your with secured, fast and reliable voting experience without need to panic that your vote would be compromised.</h3>
                         <div class="my-btn-group">
-                            <button type="button" class="my-btn-primary" data-bs-toggle="modal" data-bs-target="#voterslogin"> Login </button>
+                            <?= setVoterButton() ?>
                             <a href="/register.php" class="my-btn-primary outline-primary"> Adminstrator's Account</a>
                         </div>
                     </div>
@@ -63,6 +64,7 @@ $choose = (new Content)->choose();
         <?php require_once __DIR__ . '/./includes/footer.php'; ?>
         <?php require_once __DIR__ . '/./includes/script.php'; ?>
         <script src="./assets/scripts/accordion.js" type="module"></script>
+        <script src="./assets/scripts/landing_header.js" type="module"></script>
     </body>
 
 </html>

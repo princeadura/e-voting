@@ -1,4 +1,9 @@
 <footer class="landing-footer">
+
+    <button id="backToTop" class="back-to-top">
+        <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </button>
+
     <div class="container">
         <form action="#" class="contact">
             <h4 class="">Contact Us</h4>

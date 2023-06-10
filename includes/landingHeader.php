@@ -7,8 +7,7 @@ $form = (new Content)->loginFields();
         <div class="left">
             <div class="logo">
                 <a href="/" class="brand" aria-label="icon">
-                    <i class="fas fa-box-open"></i>
-                    <span>E-Voting</span>
+                    <img src="/assets/images/logo.png" alt="" class="img-logo">
                 </a>
             </div>
             <button class="hamburger">
@@ -27,7 +26,7 @@ $form = (new Content)->loginFields();
                     <a href="#" class="link-primary nav-link-primary  <?= $page == "services" ? "active" : "" ?> ">Services</a>
                 </li>
                 <li class="link-list">
-                    <button class="my-btn-primary" data-bs-toggle="modal" data-bs-target="#voterslogin">Login</button>
+                    <?= setVoterButton() ?>
                 </li>
             </ul>
         </div>
@@ -42,25 +41,25 @@ $form = (new Content)->loginFields();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" class="voterslogin">
+                <form action="" class="voterslogin" id="voterLogin" method="POST">
                     <div class="fields">
                         <?php foreach ($form as $field) { ?>
-                            <div class="field">
-                                <div class="floating_form">
-                                    <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
-                                    <label for="<?= $field["name"] ?>" class="floating_label">
-                                        <?= $field["label"] ?>
-                                    </label>
-                                    <?php if ($field["type"] == "password") { ?>
-                                        <span class="show icon">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </span>
-                                    <?php } ?>
-                                </div>
+                        <div class="field">
+                            <div class="floating_form">
+                                <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
+                                <label for="<?= $field["name"] ?>" class="floating_label">
+                                    <?= $field["label"] ?>
+                                </label>
+                                <?php if ($field["type"] == "password") { ?>
+                                <span class="show icon">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                                <?php } ?>
                             </div>
+                        </div>
                         <?php } ?>
                     </div>
-                    <button type="submit" class="my-btn-primary" name="userLogin"> Login </button>
+                    <button type="submit" class="my-btn-primary" name="voterLogin"> Login </button>
                 </form>
             </div>
         </div>

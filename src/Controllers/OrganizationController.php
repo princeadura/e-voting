@@ -21,7 +21,7 @@ class OrganizationController
             return;
         }
         $admin = array_filter((new Admins)->fetchAll([
-            "email" => $_SESSION["admin"]
+            "username" => $_SESSION["admin"]
         ]))[0];
 
         list($admin_id, $organization) =   array_values(
@@ -35,7 +35,8 @@ class OrganizationController
         $action = (!empty($organization)) ?
             (new Organizations)->update($this->fields, [
                 "organization_id" => $organization
-            ]) : (new Organizations)->insert([
+            ])
+            : (new Organizations)->insert([
                 "organization_name" => $this->fields["organization_name"],
                 "head" => $admin_id
             ]);

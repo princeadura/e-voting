@@ -6,5 +6,7 @@ if ($group == "landing") {
     echo '<link rel="stylesheet" href="./../assets/styles/css/landing.css">';
 } else if ($group == "admin") {
     echo '<link rel="stylesheet" href="./../assets/styles/css/admin.css">';
+} else if ($group == "voters") {
+    echo '<link rel="stylesheet" href="./../assets/styles/css/voters.css">';
 }
 ?>

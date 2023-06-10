@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php
-$page = "candidate-list";
-$subgroup = "candidatelist";
+$page = "candidate";
 require_once __DIR__ . '/./../src/request.php';
 require_once __DIR__ . '/./includes/head.php';
 ?>

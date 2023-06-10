@@ -1,8 +1,10 @@
 <?php
 session_start();
+ob_start();
 require_once __DIR__ . '/./library/Content.php';
 require_once __DIR__ . '/./library/Auth.php';
 require_once __DIR__ . '/./library/Upload.php';
+require_once __DIR__ . '/./library/functions.php';
 require_once __DIR__ . '/./Models/autoload.php';
 require_once __DIR__ . '/./Controllers/autoload.php';
 
@@ -62,5 +64,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if (isset($_POST["deleteElection"])) {
         array_pop($fields);
         (new ElectionController($fields))->deleteElection();
+    } else if (isset($_POST["addPosition"])) {
+        array_pop($fields);
+        (new PositionController($fields))->addPosition();
+    } else if (isset($_POST["editPosition"])) {
+        array_pop($fields);
+        (new PositionController($fields))->editPosition();
+    } else if (isset($_POST["deletePosition"])) {
+        array_pop($fields);
+        (new PositionController($fields))->deletePosition();
+    } else if (isset($_POST["addUser"])) {
+        array_pop($fields);
+        (new VoterController($fields))->register();
+    } else if (isset($fields["addMultipleUser"])) {
+        (new VoterController($fields))->registerMultipleUser();
+    } else if (isset($fields["getVoter"])) {
+        array_pop($fields);
+        echo json_encode(VoterController::getAllVoters($fields));
+    } else if (isset($fields["editUser"])) {
+        array_pop($fields);
+        (new VoterController($fields))->update();
+    } else if (isset($fields["deleteUser"])) {
+        array_pop($fields);
+        (new VoterController($fields))->delete();
+    } else if (isset($fields["voterlogin"])) {
+        array_pop($fields);
+        (new VoterController($fields))->login();
+    } else if (isset($fields["resetVoterPassword"])) {
+        array_pop($fields);
+        (new VoterController($fields))->resetPassword();
+    } else if (isset($fields["resetVoterPin"])) {
+        array_pop($fields);
+        (new VoterController($fields))->resetPin();
     }
 }

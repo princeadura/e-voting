@@ -3,6 +3,20 @@ $(window).on("click", function (e) {
 	$(".admin-sidebar").removeClass("open");
 });
 
+$(window).on("scroll", () => handleBackToTop());
+$(window).on("load", () => handleBackToTop());
+
+handleBackToTop = function () {
+	let scrollHeight = 200;
+	let scrollTop = $(document).scrollTop();
+	$("#backToTop").toggleClass("open", scrollTop >= scrollHeight);
+	$(".landing-header").toggleClass("scrolled", scrollTop >= scrollHeight);
+};
+
+$("#backToTop").on("click", function () {
+	$(document).scrollTop(0);
+});
+
 // This is the events for when the landing page navbar toggle ic clicked
 $(".landing-header .hamburger").on("click", function () {
 	let header = $(this).parents(".landing-header");

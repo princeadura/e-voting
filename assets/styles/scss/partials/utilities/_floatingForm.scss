@@ -11,9 +11,6 @@
         &[type="password"] {
             padding-right: 2em;
         }
-        // &[type="file"] {
-        //     cursor: pointer;
-        // }
         &::file-selector-button {
             background: var(--primary) !important;
             color: var(--accent);
@@ -49,8 +46,7 @@
         top: 50%;
         left: 1em;
         transform: translateY(-50%);
-        transition: 0.15s ease-in-out background, 0.15s ease-in-out top, 0.15s ease-in-out font-size,
-            0.15s ease-in-out color;
+        transition: 0.15s ease-in-out background, 0.15s ease-in-out top, 0.15s ease-in-out color;
         cursor: text;
         text-transform: capitalize;
     }

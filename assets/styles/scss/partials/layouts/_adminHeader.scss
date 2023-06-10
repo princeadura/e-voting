@@ -6,7 +6,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
+    z-index: 999;
+    height: var(--admin-header-height);
     .right {
         display: flex;
         gap: 1rem;

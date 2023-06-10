@@ -1,0 +1,74 @@
+@use "./../../components/responsive"as res;
+
+.dashboard {
+
+    @include res.responsiveMedia(md) {
+        display              : grid;
+        grid-template-columns: .4fr 1fr;
+    }
+
+    aside {
+        width     : 100%;
+        position  : sticky;
+        top       : 4rem;
+        z-index   : 100;
+        background: var(--accent);
+        box-shadow: 0 .3rem .6rem var(--shadow);
+
+        @include res.responsiveMedia(md) {
+            padding       : 1em;
+            box-shadow    : none;
+            flex-direction: column;
+            gap           : 0;
+            justify-items : start;
+            overflow      : hidden;
+            height        : calc(100vh - 4rem);
+            background    : transparent;
+        }
+
+        .group {
+            display  : flex;
+            gap      : 1rem;
+            flex-wrap: wrap;
+            padding  : 1rem;
+            overflow : hidden;
+
+            @include res.responsiveMedia(md) {
+                flex-direction: column;
+                gap           : 0;
+                padding       : 0;
+                border-radius : .25rem;
+                box-shadow    : 0 .3rem .6rem var(--primary--light);
+            }
+        }
+
+
+        .link {
+            flex-grow: 1;
+            font-size: clamp(.9rem, 3vw, 1rem);
+
+            &.active {
+                background: var(--primary--dark);
+            }
+
+
+            @include res.responsiveMedia(md) {
+                flex-grow    : 0;
+                border-radius: 0;
+                text-align   : left;
+                box-shadow   : none !important;
+                padding      : 1em;
+
+                &:not(:last-child) {
+                    border-bottom: .1rem solid var(--accent);
+                }
+            }
+        }
+
+    }
+
+    .main {
+        padding: 1rem;
+    }
+
+}

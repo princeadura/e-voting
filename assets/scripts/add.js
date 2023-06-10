@@ -26,6 +26,32 @@ $("#editElectionForm").on("submit", function (e) {
 	performAjax(this, "editElection", { election_id: id });
 });
 
+//events for when the  admin wants to add election
+$("#addPositionForm").on("submit", function (e) {
+	e.preventDefault();
+	let id = $(this).data("id");
+	performAjax(this, "addPosition", { election: id });
+});
+//events for when the  admin wants to add election
+$("#editPositionForm").on("submit", function (e) {
+	e.preventDefault();
+	let id = $(this).data("id");
+	let index_id = $(this).data("index_id");
+	performAjax(this, "editPosition", { election: id, index_id });
+});
+
+//events for when the  admin wants to add user
+$("#addUserForm").on("submit", function (e) {
+	e.preventDefault();
+	performAjax(this, "addUser");
+});
+
+$("#editUserForm").on("submit", function (e) {
+	e.preventDefault();
+	let id = $(this).data("id");
+	performAjax(this, "editUser", { voter_id: id });
+});
+
 //The main function that powers the ajax call made in this file
 async function performAjax(field, formname, id = null) {
 	try {
@@ -82,6 +108,7 @@ async function performAjax(field, formname, id = null) {
 				form.prepend(alert(message, "danger"));
 			}
 		}
+		setTimeout(() => form.find(".feedback").remove(), 3000);
 	} catch (error) {
 		console.error(error.responseText, error);
 	}

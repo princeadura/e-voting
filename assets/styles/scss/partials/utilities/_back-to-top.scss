@@ -1,0 +1,82 @@
+.back-to-top {
+    position     : fixed;
+    bottom       : 4rem;
+    color        : var(--dark);
+    right        : 2rem;
+    width        : 3rem;
+    border-radius: 50%;
+    aspect-ratio : 1/1;
+    background   : linear-gradient(var(--secondary), var(--primary));
+    font-size    : 1.3rem;
+    border       : none;
+    box-shadow   : 0 0 0.4rem 0.1rem #00000035;
+    transition   : 0.25s ease-in-out transform, 7s ease-in-out bottom;
+    visibility   : hidden;
+    z-index      : 1;
+    animation    : initiateBackToTop 0.5s ease-in-out;
+    outline      : none;
+
+    @keyframes initiateBackToTop {
+        from {
+            bottom    : 4rem;
+            opacity   : 0;
+            visibility: visible;
+        }
+
+        25% {
+            opacity   : 0.25;
+            visibility: visible;
+        }
+
+        50% {
+            bottom    : 0;
+            opacity   : 0.5;
+            visibility: visible;
+        }
+
+        75% {
+            opacity   : 0.75;
+            visibility: visible;
+        }
+
+        to {
+            opacity: 1;
+            bottom : 100%;
+        }
+    }
+
+    &.open {
+        animation : openBackToTop 0.5s ease-in-out;
+        visibility: visible;
+
+        @keyframes openBackToTop {
+            from {
+                bottom : 100%;
+                opacity: 0;
+            }
+
+            25% {
+                opacity: 0.25;
+            }
+
+            50% {
+                opacity: 0.5;
+                bottom : 0;
+            }
+
+            75% {
+                opacity: 0.75;
+                bottom : 6rem;
+            }
+
+            to {
+                opacity: 1;
+                bottom : 4rem;
+            }
+        }
+    }
+
+    &:hover {
+        transform: scale(0.9);
+    }
+}

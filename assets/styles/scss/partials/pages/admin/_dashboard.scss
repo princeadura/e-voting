@@ -1,0 +1,168 @@
+@use "./../../components/responsive"as res;
+
+.dashboard {
+    padding: 1rem;
+
+    .mycard-wrapper {
+        display              : grid;
+        gap                  : 1rem;
+        width                : min(100%, 100rem);
+        margin               : auto;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+        margin-bottom        : 2.5rem;
+
+        .mycard {
+            --card-background: var(--primary);
+            box-shadow       : 0 0 0.8rem 0.2rem #00000021;
+            padding          : 1rem;
+            border-radius    : 0.5rem;
+            display          : grid;
+            row-gap          : 1rem;
+            background       : linear-gradient(45deg, var(--card-background), var(--primary--light));
+            color            : var(--accent);
+            position         : relative;
+            text-decoration  : none;
+            transition       : 0.5s ease-in-out transform;
+            user-select      : none;
+            overflow         : hidden;
+
+            &:hover {
+                transform: scale(0.9);
+            }
+
+            &.admin {
+                --card-background: var(--danger);
+            }
+
+            &.candidate {
+                --card-background: var(--neutral);
+            }
+
+            &.election {
+                --card-background: var(--success);
+            }
+
+            .title {
+                grid-row: 2;
+            }
+
+            .icon {
+                font-size    : 1.5rem;
+                transition   : 0.5s ease-in-out transform;
+                background   : var(--accent);
+                width        : 4rem;
+                aspect-ratio : 1/1;
+                display      : grid;
+                place-content: center;
+                color        : var(--card-background);
+                border-radius: 50%;
+                box-shadow   : 0 0 0.8rem 0.2em var(--primary--light);
+            }
+
+            .count {
+                grid-area    : 2 / span 1;
+                justify-self : end;
+                font-size    : 1.2rem;
+                margin-bottom: 0 !important;
+                position     : relative;
+                color        : var(--card-background);
+                font-weight  : 900;
+                word-wrap    : break-word;
+            }
+        }
+    }
+
+
+    .info {
+        display       : flex;
+        flex-direction: column;
+        gap           : 2rem;
+        width         : min(100%, 90rem);
+        margin        : auto;
+
+        @include res.responsiveMedia(lg) {
+            flex-direction: row;
+        }
+
+        .profile-info {
+            @include res.responsiveMedia(lg) {
+                width: 30%;
+            }
+
+            .list-group {
+                margin-top: 1rem;
+                box-shadow: 0 .3rem .6rem var(--shadow);
+
+                p {
+                    margin   : 0 !important;
+                    word-wrap: break-word;
+
+                    span {
+                        font-weight: bold;
+                        color      : var(--primary);
+                    }
+                }
+            }
+
+
+        }
+
+        .election-info {
+            @include res.responsiveMedia(lg) {
+                flex-grow: 1;
+            }
+
+            .table-responsive {
+                border-radius: 0.5rem;
+                margin-top   : 1rem;
+            }
+
+            .election-table {
+                background      : var(--accent);
+                box-shadow      : 0 0.3rem 0.9rem var(--shadow);
+                // overflow     : hidden;
+                border-radius   : inherit;
+            }
+
+            thead {
+                tr {
+                    background: var(--primary);
+                }
+            }
+
+            td:last-of-type {
+                text-align: center;
+            }
+
+            td:first-of-type {
+                text-align: right;
+            }
+
+            td {
+                vertical-align: bottom;
+            }
+
+            th {
+                color     : var(--accent);
+                text-align: center;
+            }
+
+            tr:nth-child(even) {
+                background: var(--background--light);
+            }
+
+            .btn {
+                padding      : 0.2em 0.5em;
+                border-radius: 50px;
+                font-size    : 1rem !important;
+            }
+        }
+    }
+
+    .right {
+        background   : var(--primary);
+        color        : var(--accent);
+        border-radius: 0.5rem;
+        box-shadow   : 0 0 0.8rem 0.4rem var(--shadow);
+    }
+}

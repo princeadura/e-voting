@@ -39,7 +39,6 @@ $(".delete").on("click", async function () {
 	let parent = $(this).parent();
 	let data = { admin_id, deleteAdmin: true };
 	try {
-		console.log(data, this);
 		let submitText = $(this).html();
 		$(this).prop({ disabled: true }).html(loader);
 		let act = await $.post("/src/request.php", data, null, "json");

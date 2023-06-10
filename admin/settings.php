@@ -76,7 +76,7 @@ require_once __DIR__ . '/./includes/head.php';
                         <form action="" class="settings-form" id="organization" method="POST">
                             <div class="field">
                                 <div class="floating_form">
-                                    <input type="text" id="organization_name" name="organization_name" class="form-control" placeholder="a" value="<?= $_POST["organization"] ?? $organizationName ?>">
+                                    <input type="text" id="organization_name" name="organization_name" class="form-control" placeholder="a" value="<?= $_POST["organization"] ?? $organizationName ?? "" ?>">
                                     <label for="organization" class="floating_label">Organization</label>
                                 </div>
                             </div>
@@ -123,8 +123,6 @@ require_once __DIR__ . '/./includes/head.php';
                         </div>
                     </div>
                 </div>
-
-                </script>
             </section>
         </main>
         <?php require_once __DIR__ . '/./includes/footer.php'; ?>

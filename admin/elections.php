@@ -6,17 +6,18 @@ require_once __DIR__ . '/./includes/head.php';
 ?>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Elections</title>
-        <?php require_once __DIR__ . '/.././includes/style.php'; ?>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elections</title>
+    <?php require_once __DIR__ . '/.././includes/style.php'; ?>
+</head>
 
-    <body>
-        <?php require_once __DIR__ . '/./includes/header.php'; ?>
-        <?php require_once __DIR__ . '/./includes/sidebar.php'; ?>
+<body>
+    <?php require_once __DIR__ . '/./includes/header.php'; ?>
+    <?php require_once __DIR__ . '/./includes/sidebar.php'; ?>
+    <?php if (isset($admin["organization"])) { ?>
         <main class="general-list" data-organization="<?= $admin["organization"] ?>">
             <div class="table-responsive member-list">
                 <div class="top mb-3">
@@ -43,29 +44,29 @@ require_once __DIR__ . '/./includes/head.php';
                     </thead>
                     <tbody class="">
                         <?php foreach ($elections as $key => $election) { ?>
-                        <tr>
-                            <td class="sn"><?= ++$key ?></td>
-                            <td><?= $election["election_name"] ?></td>
-                            <td><?= $election["election_status"] ?></td>
-                            <td><?= (new DateTime($election["election_start_date"]))->format("F jS, Y") ?></td>
-                            <td><?= (new DateTime($election["election_end_date"]))->format("F jS, Y") ?></td>
-                            <td class="action">
-                                <div>
-                                    <button class="btn btn-sm btn-success" onclick="editElection(this)" data-id="<?= $election["election_id"] ?>">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                        <span class="tip">Edit</span>
-                                    </button>
+                            <tr>
+                                <td class="sn"><?= ++$key ?></td>
+                                <td><?= $election["election_name"] ?></td>
+                                <td><?= $election["election_status"] ?></td>
+                                <td><?= (new DateTime($election["election_start_date"]))->format("F jS, Y") ?></td>
+                                <td><?= (new DateTime($election["election_end_date"]))->format("F jS, Y") ?></td>
+                                <td class="action">
+                                    <div>
+                                        <button class="btn btn-sm btn-success" onclick="editElection(this)" data-id="<?= $election["election_id"] ?>">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                            <span class="tip">Edit</span>
+                                        </button>
 
-                                    <?php if (strtolower($election["election_status"]) == "pending") { ?>
-                                    <button class="btn btn-sm btn-danger" data-id="<?= $election["election_id"] ?>" onclick="deleteElection(this)">
-                                        <i class="fa fa-trash-can" aria-hidden="true"></i>
-                                        <span class="tip">Delete</span>
-                                    </button>
-                                    <?php } ?>
+                                        <?php if (strtolower($election["election_status"]) == "pending") { ?>
+                                            <button class="btn btn-sm btn-danger" data-id="<?= $election["election_id"] ?>" onclick="deleteElection(this)">
+                                                <i class="fa fa-trash-can" aria-hidden="true"></i>
+                                                <span class="tip">Delete</span>
+                                            </button>
+                                        <?php } ?>
 
-                                </div>
-                            </td>
-                        </tr>
+                                    </div>
+                                </td>
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>
@@ -82,14 +83,14 @@ require_once __DIR__ . '/./includes/head.php';
                         <form class="modal-body modal-form" method="POST" id="addElectionForm">
                             <div class="fields">
                                 <?php foreach ($electionFields as $field) { ?>
-                                <div class="field">
-                                    <div class="floating_form">
-                                        <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
-                                        <label for="<?= $field["name"] ?>" class="floating_label">
-                                            <?= $field["label"] ?>
-                                        </label>
+                                    <div class="field">
+                                        <div class="floating_form">
+                                            <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
+                                            <label for="<?= $field["name"] ?>" class="floating_label">
+                                                <?= $field["label"] ?>
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
                                 <?php } ?>
                             </div>
                             <button type="submit" name="addAdmin" class="my-btn-primary">
@@ -111,14 +112,14 @@ require_once __DIR__ . '/./includes/head.php';
                         <form class="modal-body modal-form" method="POST" id="editElectionForm">
                             <div class="fields">
                                 <?php foreach ($electionFields as $field) { ?>
-                                <div class="field">
-                                    <div class="floating_form">
-                                        <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
-                                        <label for="<?= $field["name"] ?>" class="floating_label">
-                                            <?= $field["label"] ?>
-                                        </label>
+                                    <div class="field">
+                                        <div class="floating_form">
+                                            <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
+                                            <label for="<?= $field["name"] ?>" class="floating_label">
+                                                <?= $field["label"] ?>
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
                                 <?php } ?>
                             </div>
                             <button type="submit" name="addAdmin" class="my-btn-primary">
@@ -150,12 +151,15 @@ require_once __DIR__ . '/./includes/head.php';
             </div>
 
         </main>
-        <?php require_once __DIR__ . '/./includes/footer.php'; ?>
-        <?php require_once __DIR__ . '/.././includes/script.php'; ?>
-        <script src="/assets/scripts/add.js" type="module"></script>
-        <script src="/assets/scripts/list.js"></script>
-        <script src="/assets/scripts/election.js" type="module"></script>
+    <?php } else { ?>
+        <?php require_once __DIR__ . '/./includes/register_organization.php'; ?>
+    <?php } ?>
+    <?php require_once __DIR__ . '/./includes/footer.php'; ?>
+    <?php require_once __DIR__ . '/.././includes/script.php'; ?>
+    <script src="/assets/scripts/add.js" type="module"></script>
+    <script src="/assets/scripts/list.js"></script>
+    <script src="/assets/scripts/election.js" type="module"></script>
 
-    </body>
+</body>
 
 </html>

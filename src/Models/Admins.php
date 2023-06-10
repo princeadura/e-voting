@@ -18,7 +18,7 @@ class Admins extends Database
             return true;
         } catch (PDOException $e) {
             $this->connection->rollBack();
-            // echo "Error During multi insert {$e->getMessage()}";
+            echo "Error During multi insert {$e->getMessage()}";
         }
     }
 
@@ -26,7 +26,7 @@ class Admins extends Database
     {
         return array_values(
             array_filter(
-                $this->fetchAll(["email" => $_SESSION["admin"]])[0],
+                $this->fetchAll(["username" => $_SESSION["admin"]])[0],
                 fn ($el) => in_array($el, [$search]),
                 ARRAY_FILTER_USE_KEY
             ),

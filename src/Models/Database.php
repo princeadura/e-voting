@@ -118,7 +118,7 @@ class Database
             $stmt->execute($sanitizedData);
             return true;
         } catch (PDOException $e) {
-            // echo "Error During Inserting: {$e->getMessage()}";
+            echo "Error During Inserting: {$e->getMessage()}";
         }
     }
 
