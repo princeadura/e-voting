@@ -44,25 +44,25 @@ $form = (new Content)->loginFields();
                 <form action="" class="voterslogin" id="voterLogin" method="POST">
                     <div class="fields">
                         <?php foreach ($form as $field) { ?>
-                            <div class="field">
+                        <div class="field">
+                            <?php if ($field["type"] == "password") { ?>
+                            <a href="#" class="link-primary">Forget password??</a>
+                            <?php } ?>
+                            <div class="floating_form">
+                                <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
+                                <label for="<?= $field["name"] ?>" class="floating_label">
+                                    <?= $field["label"] ?>
+                                </label>
                                 <?php if ($field["type"] == "password") { ?>
-                                    <a href="#" class="link-primary">Forget password??</a>
+                                <span class="show icon">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
                                 <?php } ?>
-                                <div class="floating_form">
-                                    <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
-                                    <label for="<?= $field["name"] ?>" class="floating_label">
-                                        <?= $field["label"] ?>
-                                    </label>
-                                    <?php if ($field["type"] == "password") { ?>
-                                        <span class="show icon">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </span>
-                                    <?php } ?>
-                                </div>
                             </div>
+                        </div>
                         <?php } ?>
                     </div>
-                    <button type="submit" class="my-btn-primary" name="voterLogin"> Login </button>
+                    <button type="submit" class="my-btn-primary" name="voterLogin"> Login <i class="fas fa-door-open"></i> </button>
                 </form>
             </div>
         </div>
