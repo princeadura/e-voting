@@ -1,4 +1,4 @@
-export function Faq() {
+export async function Faq() {
 	let section = $(`
        <section class="faq">
 	   <img src="/assets/images/faq.svg" alt="" class="faq-img" srcset="" />
@@ -7,11 +7,11 @@ export function Faq() {
 			</div>
        </section>
     `);
-	section.find(".container").append(accordion());
+	section.find(".container").append(await accordion());
 	return section;
 }
 
-function accordion() {
+async function accordion() {
 	let handleClick = function () {
 		let accordion = $(this).parents(".my-accordion");
 		accordion.siblings().each((i, el) => {
@@ -25,28 +25,26 @@ function accordion() {
 		accordion.find(".my-accordion-body").css({ "--height": `${height}px` });
 	};
 	let accordions = $(`<div class="my-accordions"></div>`);
-	let accordion = ({ index }) =>
+	let accordionElment = ({ question, answer }) =>
 		$(`
         <div class="my-accordion">
             <button type="button" class="my-accordion-head"> 
-                <h3 class="my-accordion-title m-0">Title </h3> 
+                <h3 class="my-accordion-title m-0"> ${question} </h3> 
                 <span class="icon">
                     <i class="fas fa-angle-down"></i>
                 </span>
             </button>
             <div class="my-accordion-body">
                 <div class="my-accordion-content">
-                    <h5> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia magnam tenetur praesentium libero aut quo repellendus iure est dicta, quae maxime culpa velit in, accusantium eaque tempora omnis soluta, vitae dolores dolorem aspernatur rem! ${
-						index % 2 == 0 &&
-						"tur praesentium libero aut quo repellendus iure est dicta, quae maxime culpa velit in, accusantium eaque tempora omnis soluta, vitae dolores do"
-					}  </h5>
+                    <h5> ${answer} </h5>
                 </div>
             </div>
         </div>
     `);
-	for (let index = 0; index < 5; index++) {
-		accordions.append(accordion({ index }));
-	}
+	let questions = await $.get("/assets/scripts/content/faq.json");
+	questions.forEach((question) => {
+		accordions.append(accordionElment(question));
+	});
 	accordions
 		.find(".my-accordion .my-accordion-head")
 		.on("click", handleClick);

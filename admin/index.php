@@ -3,24 +3,25 @@
 $page = "dashboard";
 require_once __DIR__ . '/./../src/request.php';
 require_once __DIR__ . '/./includes/head.php';
+$adminLink = ($admin["role"] == "head") ? "/admin/admin_list.php" : "";
 ?>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Dashboard</title>
-        <?php require_once __DIR__ . '/.././includes/style.php'; ?>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <?php require_once __DIR__ . '/.././includes/style.php'; ?>
+</head>
 
-    <body>
-        <?php require_once __DIR__ . '/./includes/header.php'; ?>
-        <?php require_once __DIR__ . '/./includes/sidebar.php'; ?>
-        <?php if (isset($admin["organization"])) { ?>
+<body>
+    <?php require_once __DIR__ . '/./includes/header.php'; ?>
+    <?php require_once __DIR__ . '/./includes/sidebar.php'; ?>
+    <?php if (isset($admin["organization"])) { ?>
         <main class="dashboard">
             <section class="mycard-wrapper">
-                <a href="#" class="mycard admin">
+                <a href="<?= $adminLink ?>" class="mycard">
                     <span class="icon">
                         <i class="fas fa-user-shield"></i>
                     </span>
@@ -28,10 +29,10 @@ require_once __DIR__ . '/./includes/head.php';
                         Administrators
                     </h5>
                     <p class="count">
-                        8
+                        <?= count(AdminController::getAllAdministrator(["organization" => $admin["organization"]])) - 1; ?>
                     </p>
                 </a>
-                <a href="#" class="mycard voter">
+                <a href="/admin/user_list.php" class="mycard">
                     <span class="icon">
                         <i class="fas fa-person-booth"></i>
                     </span>
@@ -39,21 +40,10 @@ require_once __DIR__ . '/./includes/head.php';
                         Voters
                     </h5>
                     <p class="count">
-                        40
+                        <?= count(VoterController::getAllVoters(["organization" => $admin["organization"]])); ?>
                     </p>
                 </a>
-                <a href="#" class="mycard candidate">
-                    <span class="icon">
-                        <i class="fas fa-user-tag"></i>
-                    </span>
-                    <h5 class="title">
-                        Candidates
-                    </h5>
-                    <p class="count">
-                        10
-                    </p>
-                </a>
-                <a href="#" class="mycard election">
+                <a href="/admin/elections.php" class="mycard">
                     <span class="icon">
                         <i class="fas fa-vote-yea"></i>
                     </span>
@@ -61,7 +51,7 @@ require_once __DIR__ . '/./includes/head.php';
                         Elections
                     </h5>
                     <p class="count">
-                        4
+                        <?= count((new ElectionController(["organization" => $admin["organization"]]))->getAllElections()); ?>
                     </p>
                 </a>
             </section>
@@ -103,12 +93,12 @@ require_once __DIR__ . '/./includes/head.php';
                             </thead>
                             <tbody>
                                 <?php foreach ($elections as $key => $election) { ?>
-                                <tr class="">
-                                    <td><?= ++$key ?></td>
-                                    <td><?= $election["election_name"] ?></td>
-                                    <td><?= $election["election_status"] ?></td>
-                                    <td> <a href="#" class="btn my-btn-primary"> <i class="fas fa-binoculars"></i> </a> </td>
-                                </tr>
+                                    <tr class="">
+                                        <td><?= ++$key ?></td>
+                                        <td><?= $election["election_name"] ?></td>
+                                        <td><?= $election["election_status"] ?></td>
+                                        <td> <a href="#" class="btn btn-primary"> <i class="fas fa-binoculars"></i> </a> </td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
@@ -117,11 +107,11 @@ require_once __DIR__ . '/./includes/head.php';
                 </div>
             </section>
         </main>
-        <?php } else { ?>
+    <?php } else { ?>
         <?php require_once __DIR__ . '/./includes/register_organization.php'; ?>
-        <?php } ?>
-        <?php require_once __DIR__ . '/./includes/footer.php'; ?>
-        <?php require_once __DIR__ . '/.././includes/script.php'; ?>
-    </body>
+    <?php } ?>
+    <?php require_once __DIR__ . '/./includes/footer.php'; ?>
+    <?php require_once __DIR__ . '/.././includes/script.php'; ?>
+</body>
 
 </html>

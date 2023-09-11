@@ -1,7 +1,7 @@
 @use "./../../components/responsive" as res;
 body {
     grid-template-areas: "header header header" "main main main" "footer footer footer";
-    grid-auto-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
     grid-template-columns: auto 1fr;
     overflow-x: hidden;
     @include res.responsiveMedia(md) {

@@ -8,13 +8,16 @@
         position: absolute;
         height: 100%;
         top: 0;
-        right: -6rem;
+        left: 50%;
+        transform: translate(-50%);
+        // aspect-ratio: 1/0.5;
+        // right: -15rem;
         z-index: -1;
     }
     &-title {
         text-align: center;
         color: var(--primary);
-        margin-bottom: 2rem;
+        margin-bottom: 4rem;
     }
 }
 .my-accordions {
@@ -55,6 +58,9 @@
                 font-size: 1.2rem;
                 transition: 0.25s ease-in-out transform;
             }
+        }
+        &-title {
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
         }
         &-body {
             --height: 0;

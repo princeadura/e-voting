@@ -101,16 +101,17 @@ class PositionController
             'election' => $this->fields['election'],
             "organization" => $orgId
         ])[0]["position"];
+        $savedCandidates =  (array) json_decode((new Candidates())->fetchAll([
+            'election' => $this->fields['election'],
+            "organization" => $orgId
+        ])[0]["candidate"]);
         $position = json_decode($savedPositions);
+        $candidates = $savedCandidates;
+        $positionName = $position[$this->fields["index_id"]];
         unset($position[$this->fields["index_id"]]);
+        unset($candidates[$positionName]);
         $position = array_values($position);
-        $update = (new Positions)->update(
-            ["position" => json_encode($position)],
-            [
-                "election" => $this->fields["election"],
-                "organization" => $orgId
-            ]
-        );
+        $update = (new Positions())->deletePosition($position, $candidates, $this->fields['election']);
         if ($update) {
             $res = ["message" => "Position Sucessfully Deleted", "status" => "success"];
             echo json_encode($res);

@@ -3,6 +3,15 @@ $(window).on("click", function (e) {
 	$(".admin-sidebar").removeClass("open");
 });
 
+$(window).on("resize", function () {
+	let accordion = $(".my-accordion.open");
+	if (accordion.length == 0) return;
+	let height = accordion.hasClass("open")
+		? accordion.find(".my-accordion-content")[0].clientHeight
+		: 0;
+	accordion.find(".my-accordion-body").css({ "--height": `${height}px` });
+});
+
 $(window).on("scroll", () => handleBackToTop());
 $(window).on("load", () => handleBackToTop());
 

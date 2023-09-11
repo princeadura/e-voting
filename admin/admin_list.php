@@ -3,22 +3,25 @@
 $page = "admin";
 require_once __DIR__ . '/./../src/request.php';
 require_once __DIR__ . '/./includes/head.php';
+if ($admin["role"] != "head") {
+    redirect("/admin");
+}
 
 ?>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>All Administrator</title>
-        <?php require_once __DIR__ . '/.././includes/style.php'; ?>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Administrator</title>
+    <?php require_once __DIR__ . '/.././includes/style.php'; ?>
+</head>
 
-    <body>
-        <?php require_once __DIR__ . '/./includes/header.php'; ?>
-        <?php require_once __DIR__ . '/./includes/sidebar.php'; ?>
-        <?php if (isset($admin["organization"])) { ?>
+<body>
+    <?php require_once __DIR__ . '/./includes/header.php'; ?>
+    <?php require_once __DIR__ . '/./includes/sidebar.php'; ?>
+    <?php if (isset($admin["organization"])) { ?>
         <main class="general-list" data-organization="<?= $admin["organization"] ?>">
             <div class="table-responsive member-list">
                 <div class="top mb-3">
@@ -50,39 +53,39 @@ require_once __DIR__ . '/./includes/head.php';
                     </thead>
                     <tbody class="">
                         <?php foreach ($administrators as $key => $administrator) { ?>
-                        <tr>
-                            <td class="sn"><?= ++$key ?></td>
-                            <td><?= $administrator["firstname"] ?></td>
-                            <td><?= $administrator["lastname"] ?></td>
-                            <td><?= $administrator["middlename"] ?></td>
-                            <td><?= $administrator["email"] ?></td>
-                            <td><?= $administrator["status"] ?></td>
-                            <td class="action">
-                                <div>
-                                    <button class="btn btn-sm btn-success" onclick="editAdmin(this)" data-email="<?= $administrator["email"] ?>">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                        <span class="tip">Edit</span>
-                                    </button>
+                            <tr>
+                                <td class="sn"><?= ++$key ?></td>
+                                <td><?= $administrator["firstname"] ?></td>
+                                <td><?= $administrator["lastname"] ?></td>
+                                <td><?= $administrator["middlename"] ?></td>
+                                <td><?= $administrator["email"] ?></td>
+                                <td><?= $administrator["status"] ?></td>
+                                <td class="action">
+                                    <div>
+                                        <button class="btn btn-sm btn-success" onclick="editAdmin(this)" data-email="<?= $administrator["email"] ?>">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                            <span class="tip">Edit</span>
+                                        </button>
 
-                                    <?php if ($administrator["status"]  == "r") { ?>
-                                    <button class="btn btn-sm btn-secondary" data-email="<?= $administrator["email"] ?>" onclick="disableAdmin(this)">
-                                        <i class="fas fa-ban" aria-hidden="true"></i>
-                                        <span class="tip">Enable</span>
-                                    </button>
-                                    <?php } else { ?>
-                                    <button class="btn btn-sm btn-dark" data-email="<?= $administrator["email"] ?>" onclick="disableAdmin(this)">
-                                        <i class="fas fa-ban" aria-hidden="true"></i>
-                                        <span class="tip">Disable</span>
-                                    </button>
-                                    <?php } ?>
+                                        <?php if ($administrator["status"]  == "r") { ?>
+                                            <button class="btn btn-sm btn-secondary" data-email="<?= $administrator["email"] ?>" onclick="disableAdmin(this)">
+                                                <i class="fas fa-ban" aria-hidden="true"></i>
+                                                <span class="tip">Enable</span>
+                                            </button>
+                                        <?php } else { ?>
+                                            <button class="btn btn-sm btn-dark" data-email="<?= $administrator["email"] ?>" onclick="disableAdmin(this)">
+                                                <i class="fas fa-ban" aria-hidden="true"></i>
+                                                <span class="tip">Disable</span>
+                                            </button>
+                                        <?php } ?>
 
-                                    <button class="btn btn-sm btn-danger" data-email="<?= $administrator["email"] ?>" onclick="deleteAdmin(this)">
-                                        <i class="fa fa-trash-can" aria-hidden="true"></i>
-                                        <span class="tip">Delete</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                                        <button class="btn btn-sm btn-danger" data-email="<?= $administrator["email"] ?>" onclick="deleteAdmin(this)">
+                                            <i class="fa fa-trash-can" aria-hidden="true"></i>
+                                            <span class="tip">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>
@@ -99,19 +102,19 @@ require_once __DIR__ . '/./includes/head.php';
                         <form class="modal-body modal-form" method="POST" id="addAdminForm">
                             <div class="fields">
                                 <?php foreach ($adminRegister as $field) { ?>
-                                <div class="field">
-                                    <div class="floating_form">
-                                        <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
-                                        <label for="<?= $field["name"] ?>" class="floating_label">
-                                            <?= $field["label"] ?>
-                                        </label>
-                                        <?php if ($field["type"] == "password") { ?>
-                                        <span class="show icon">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </span>
-                                        <?php } ?>
+                                    <div class="field">
+                                        <div class="floating_form">
+                                            <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
+                                            <label for="<?= $field["name"] ?>" class="floating_label">
+                                                <?= $field["label"] ?>
+                                            </label>
+                                            <?php if ($field["type"] == "password") { ?>
+                                                <span class="show icon">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </span>
+                                            <?php } ?>
+                                        </div>
                                     </div>
-                                </div>
                                 <?php } ?>
                             </div>
                             <button type="submit" name="addAdmin" class="my-btn-primary">
@@ -132,20 +135,20 @@ require_once __DIR__ . '/./includes/head.php';
                         </div>
                         <form class="modal-body modal-form" method="POST" id="editAdminForm">
                             <div class="fields">
-                                <?php foreach ($adminRegister as $field) { ?>
-                                <div class="field">
-                                    <div class="floating_form">
-                                        <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
-                                        <label for="<?= $field["name"] ?>" class="floating_label">
-                                            <?= $field["label"] ?>
-                                        </label>
-                                        <?php if ($field["type"] == "password") { ?>
-                                        <span class="show icon">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </span>
-                                        <?php } ?>
+                                <?php foreach ($adminEdit as $field) { ?>
+                                    <div class="field">
+                                        <div class="floating_form">
+                                            <input type="<?= $field["type"] ?>" id="<?= $field["name"] ?>" name="<?= $field["name"] ?>" class="form-control" placeholder="a">
+                                            <label for="<?= $field["name"] ?>" class="floating_label">
+                                                <?= $field["label"] ?>
+                                            </label>
+                                            <?php if ($field["type"] == "password") { ?>
+                                                <span class="show icon">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </span>
+                                            <?php } ?>
+                                        </div>
                                     </div>
-                                </div>
                                 <?php } ?>
                             </div>
                             <button type="submit" name="addAdmin" class="my-btn-primary">
@@ -235,14 +238,14 @@ require_once __DIR__ . '/./includes/head.php';
                 </div>
             </div>
         </main>
-        <?php }  else { ?>
+    <?php } else { ?>
         <?php require_once __DIR__ . '/./includes/register_organization.php'; ?>
-        <?php } ?>
-        <?php require_once __DIR__ . '/./includes/footer.php'; ?>
-        <?php require_once __DIR__ . '/.././includes/script.php'; ?>
-        <script src="/assets/scripts/add.js" type="module"></script>
-        <script src="/assets/scripts/list.js"></script>
-        <script src="/assets/scripts/admin.js" type="module"></script>
-    </body>
+    <?php } ?>
+    <?php require_once __DIR__ . '/./includes/footer.php'; ?>
+    <?php require_once __DIR__ . '/.././includes/script.php'; ?>
+    <script src="/assets/scripts/add.js" type="module"></script>
+    <script src="/assets/scripts/list.js"></script>
+    <script src="/assets/scripts/admin.js" type="module"></script>
+</body>
 
 </html>

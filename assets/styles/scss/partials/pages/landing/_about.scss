@@ -83,7 +83,7 @@
         .title {
             text-align: center;
             color: var(--primary);
-            margin-bottom: 2rem;
+            margin-bottom: 4rem;
         }
 
         &-list {
@@ -185,13 +185,17 @@
                     transform: translateY(-100%) skewY(30deg);
                     border-radius: 0.25rem;
                     opacity: 0;
-                    transition: 0.25s ease-in-out transform, 0.25s ease-in-out opacity;
+                    transition:
+                        0.25s ease-in-out transform,
+                        0.25s ease-in-out opacity;
                     gap: 1rem;
                     .icon {
                         all: unset;
                         box-sizing: border-box;
                         display: inline-block;
-                        transition: 0.25s ease-in-out color, 0.25s ease-in-out transform;
+                        transition:
+                            0.25s ease-in-out color,
+                            0.25s ease-in-out transform;
                         font-size: inherit;
                         position: relative;
                         .tip {
@@ -205,7 +209,9 @@
                             color: var(--accent);
                             padding: 0.2em 0.4em;
                             opacity: 0;
-                            transition: 0.25s ease-in-out opacity, 0.25s ease-in-out top;
+                            transition:
+                                0.25s ease-in-out opacity,
+                                0.25s ease-in-out top;
                             &::before {
                                 content: "";
                                 position: absolute;

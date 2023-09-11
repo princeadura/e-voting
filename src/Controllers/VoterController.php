@@ -18,10 +18,14 @@ class VoterController
 
         list($orgId) = (new Admins)->getMyDetail("organization");
         $emails = array_map(fn ($detail) => $detail["email"], (new Voters)->fetchAll(["organization" => $orgId]));
-        if (in_array($this->fields["email"], $emails)) {
+        $adminEmails = array_map(fn ($detail) => $detail["email"], (new Admins)->fetchAll(["organization" => $orgId]));
+        if (
+            in_array($this->fields["email"], $emails) ||
+            in_array($this->fields["email"], $adminEmails)
+        ) {
             echo json_encode([
                 "message" => [
-                    "email" => "email already exist as a Voter of this Organization"
+                    "email" => "email already exist as a User or Administrator of this Organization"
                 ],
                 "status" => "error"
             ]);
@@ -42,8 +46,6 @@ class VoterController
 
     public function login()
     {
-        session_destroy();
-        session_start();
         $empty = array_filter($this->fields, fn ($field) => empty($field));
         $data = $this->fields;
         if (count($empty) > 0) {
@@ -53,6 +55,8 @@ class VoterController
         unset($this->fields["password"]);
         $fetch = (new Voters())->fetchAll($this->fields);
         if (count($fetch) > 0 && password_verify($data["password"], $fetch[0]["password"])) {
+            session_destroy();
+            session_start();
             $_SESSION["voter"] = $fetch[0]["username"];
             echo json_encode(["message" => "Details Sucessfully Verified", "status" => "success"]);
         } else {
@@ -66,7 +70,7 @@ class VoterController
 
     public function generateUsername()
     {
-        $username = "voter" . str_pad(rand(0, 400), 4, "123");
+        $username = "voter" . str_pad(rand(0, 100000), 4, "123");
         $usernameExists = (new Voters)->count(["username" => $username]);
         if ($usernameExists) {
             $this->generateUsername();
@@ -135,11 +139,13 @@ class VoterController
         $newDetails = [];
         foreach ($details as $key => $detail) {
             $detail["username"] = $usernames[$key];
+            $detail["voting_pin"] = 1234;
             array_push($newDetails, $detail);
         }
         $details = $newDetails;
 
         $emails = array_map(fn ($detail) => $detail["email"], (new Voters)->fetchAll(["organization" => $orgId]));
+        $adminEmails = array_map(fn ($detail) => $detail["email"], (new Admins)->fetchAll(["organization" => $orgId]));
         $importEmails = array_map(fn ($detail) => $detail["email"], $details);
         $emailExpression = "/^([a-zA-Z]+[\w.]+@[a-zA-Z]+\.[a-zA-Z]{2,})$/";
         $nameExpression = "/^[a-zA-Z_-]{3,}$/";
@@ -154,6 +160,10 @@ class VoterController
         $emailExists =  array_filter(
             $details,
             fn ($detail) => in_array($detail["email"], $emails)
+        );
+        $AdminEmailExists =  array_filter(
+            $details,
+            fn ($detail) => in_array($detail["email"], $adminEmails)
         );
 
         if (count($invalid($nameExpression, "firstname")) > 0) {
@@ -188,10 +198,10 @@ class VoterController
                 "status" => "error"
             ]);
             return;
-        } else if (count($emailExists) > 0) {
+        } else if (count($emailExists) > 0 || count($AdminEmailExists) > 0) {
             echo json_encode([
                 "message" => [
-                    "file" => "Some of the emails already exists as a User of this Organization."
+                    "file" => "Some of the emails already exists as a User or administrator of this Organization."
                 ],
                 "status" => "error"
             ]);

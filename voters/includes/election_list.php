@@ -8,7 +8,7 @@
         <ul class="election_list m-0">
             <?php foreach ($elections as $key => $election) { ?>
                 <li class="election_item_wrapper">
-                    <a href="#" class="election_item">
+                    <a href="/voters/vote.php?election=<?= $election['election_id'] ?>" class="election_item">
                         <span class="number">
                             <?= ++$key ?>
                         </span>

@@ -9,8 +9,6 @@ class AdminController
 
     public function login()
     {
-        session_destroy();
-        session_start();
         $empty = array_filter($this->fields, fn ($field) => empty($field));
         $data = $this->fields;
         if (count($empty) > 0) {
@@ -20,6 +18,8 @@ class AdminController
         unset($this->fields["password"]);
         $fetch = (new Admins())->fetchAll($this->fields);
         if (count($fetch) > 0 && password_verify($data["password"], $fetch[0]["password"])) {
+            session_destroy();
+            session_start();
             $_SESSION["admin"] = $fetch[0]["username"];
             echo json_encode(["message" => "Details Sucessfully Verified", "status" => "success"]);
         } else {
@@ -39,10 +39,14 @@ class AdminController
         if ($organization) {
             list($orgId) = (new Admins)->getMyDetail("organization");
             $emails = array_map(fn ($detail) => $detail["email"], (new Admins)->fetchAll(["organization" => $orgId]));
-            if (in_array($this->fields["email"], $emails)) {
+            $UserEmails = array_map(fn ($detail) => $detail["email"], (new Voters)->fetchAll(["organization" => $orgId]));
+            if (
+                in_array($this->fields["email"], $emails) ||
+                in_array($this->fields["email"], $UserEmails)
+            ) {
                 echo json_encode([
                     "message" => [
-                        "email" => "email already exist as an Administrator of this Organization"
+                        "email" => "email already exist as an Administrator or User of this Organization"
                     ],
                     "status" => "error"
                 ]);
@@ -144,6 +148,7 @@ class AdminController
         }
         $details = $newDetails;
         $emails = array_map(fn ($detail) => $detail["email"], (new Admins)->fetchAll(["organization" => $orgId]));
+        $UserEmails = array_map(fn ($detail) => $detail["email"], (new Voters)->fetchAll(["organization" => $orgId]));
         $importEmails = array_map(fn ($detail) => $detail["email"], $details);
         $emailExpression = "/^([a-zA-Z]+[\w.]+@[a-zA-Z]+\.[a-zA-Z]{2,})$/";
         $nameExpression = "/^[a-zA-Z_-]{3,}$/";
@@ -158,6 +163,10 @@ class AdminController
         $emailExists =  array_filter(
             $importEmails,
             fn ($detail) => in_array($detail, $emails)
+        );
+        $userEmailExists =  array_filter(
+            $importEmails,
+            fn ($detail) => in_array($detail, $UserEmails)
         );
 
         if (count($invalid($nameExpression, "firstname")) > 0) {
@@ -192,10 +201,10 @@ class AdminController
                 "status" => "error"
             ]);
             return;
-        } else if (count($emailExists) > 0) {
+        } else if (count($emailExists) > 0 || count($userEmailExists) > 0) {
             echo json_encode([
                 "message" => [
-                    "file" => "Some of the emails already exist as an Administrator of this Organization."
+                    "file" => "Some of the emails already exist as an Administrator or User of this Organization."
                 ],
                 "status" => "error"
             ]);

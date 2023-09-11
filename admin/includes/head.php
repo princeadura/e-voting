@@ -16,6 +16,10 @@ $adminRegister = array_filter(
     (new Content)->registerFields(),
     fn ($field) => in_array($field["name"], ["firstname", "lastname", "middlename", "email"])
 );
+$adminEdit = array_filter(
+    (new Content)->registerFields(),
+    fn ($field) => in_array($field["name"], ["firstname", "lastname", "middlename"])
+);
 
 $personal = array_filter((new Content)->registerFields(),
     fn ($el) => in_array($el["name"], ["firstname", "lastname", "middlename"])

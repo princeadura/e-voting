@@ -153,4 +153,18 @@ class Content
             ],
         ];
     }
+
+    public function teams()
+    {
+        return [
+            [
+                "img" => "me.jpg",
+                "link_w" => "#",
+                "link_t" => "#",
+                "link_f" => "#",
+                "name" => "Abdul-Azeez Abdul-Azeem",
+                "role" => "Lead Developer",
+            ],
+        ];
+    }
 }

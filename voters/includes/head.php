@@ -13,3 +13,8 @@ $organization =  (new OrganizationController([
 $elections = (new ElectionController([
     'organization' => $voter["organization"]
 ]))->getAllElections();
+$election = function ($electionId) {
+    return (new ElectionController([
+        'election_id' => $electionId
+    ]))->getAllElections();
+};

@@ -1,0 +1,30 @@
+[
+    {
+        "question": " What is the primary objective of this e-voting project?",
+        "answer": "This project aims to showcase an adaptable electronic voting (e-voting) system designed to efficiently manage multiple elections within organizations. It also provides accessible result viewing for members and allows candidates to participate in elections."
+    },
+    {
+        "question": "How does the e-voting system work?",
+        "answer": "The e-voting system streamlines the voting process by allowing registered members to cast their votes electronically. Using an intuitive interface, participants can conveniently select their preferred candidates or options, which are securely recorded by the system."
+    },
+    {
+        "question": "Who can become a candidate in the elections?",
+        "answer": "Inclusivity is key. Any registered employee or voter has the opportunity to step forward as a candidate. Candidates are chosen from the pool of registered individuals, fostering a democratic approach to participation."
+    },
+    {
+        "question": "How are election results communicated?",
+        "answer": "Transparency meets real-time accessibility. The e-voting system promptly tabulates election results and presents them in an interactive chat-based format. Members can access these results on their devices, staying informed instantly."
+    },
+    {
+        "question": "Can candidates vote in the elections too?",
+        "answer": "Absolutely. Candidates, being registered members themselves, can actively engage in the voting process alongside other participants. This ensures fairness and participation across the board."
+    },
+    {
+        "question": "Is my personal information secure?",
+        "answer": "Rest assured, your privacy is a priority. The system employs robust security measures, including encryption and stringent access controls, to safeguard your personal information and ensure a secure voting environment."
+    },
+    {
+        "question": "Can I verify my vote after casting it?",
+        "answer": "Certainly. As a voter, you can review and verify your selections before submitting your vote. This step provides confidence that your choices are accurately recorded and reflects your intended preferences."
+    }
+]

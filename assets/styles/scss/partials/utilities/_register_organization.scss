@@ -13,6 +13,7 @@
 
     .link-primary {
         display   : block;
-        text-align: end;
+        width: max-content;
+        margin-left: auto;
     }
 }

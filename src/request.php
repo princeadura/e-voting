@@ -1,6 +1,7 @@
 <?php
 session_start();
 ob_start();
+// error_reporting(0);
 require_once __DIR__ . '/./library/Content.php';
 require_once __DIR__ . '/./library/Auth.php';
 require_once __DIR__ . '/./library/Upload.php';
@@ -96,5 +97,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if (isset($fields["resetVoterPin"])) {
         array_pop($fields);
         (new VoterController($fields))->resetPin();
+    } else if (isset($fields["addCandidate"])) {
+        array_pop($fields);
+        (new CandidateController($fields))->addCandidate();
+    } else if (isset($fields["updateCandidateImage"])) {
+        array_pop($fields);
+        (new CandidateController($fields))->setCandidateImage($_FILES["image"]);
+    } else if (isset($fields["deleteCandidate"])) {
+        array_pop($fields);
+        (new CandidateController($fields))->deleteCandidate();
     }
 }

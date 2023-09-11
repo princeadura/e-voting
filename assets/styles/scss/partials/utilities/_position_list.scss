@@ -1,0 +1,28 @@
+.position_list {
+    display: grid;
+    padding: 1em;
+    place-items: center;
+
+    .list-group {
+        .wrap {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            .back {
+                font-size: 1rem !important;
+                width: max-content;
+            }
+        }
+        width: min(100%, 40rem);
+        &-item {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            cursor: pointer;
+            &:hover {
+                color: var(--primary);
+            }
+        }
+    }
+}
