@@ -113,16 +113,26 @@ async function editElection(field) {
 	let inputFields = [...$("#editElectionForm input")];
 	inputFields.forEach((input) => {
 		let id = $(input).attr("id");
-		$(input).val(clickedElection[id]);
+		switch (id) {
+			case "election_start_date":
+			case "election_end_date":
+				$(input).val(clickedElection[id].split(" ")[0]);
+				break;
+			default:
+				$(input).val(clickedElection[id]);
+				break;
+		}
 	});
 	if (clickedElection.election_status.toLowerCase() !== "pending") {
 		$("#editElectionForm")
 			.find("#election_start_date")
 			.prop({ readonly: true });
+		$("#editElectionForm").find("#election_name").prop({ readonly: true });
 	} else {
 		$("#editElectionForm")
 			.find("#election_start_date")
 			.prop({ readonly: false });
+		$("#editElectionForm").find("#election_name").prop({ readonly: false });
 	}
 	$("#editElectionForm").data({ id });
 	$("#editElection").modal("show");

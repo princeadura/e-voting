@@ -46,16 +46,29 @@ let handleConfirmVote = function () {
 	$("#confirmVote").modal("show");
 };
 
-let handleVote = function (e) {
-	e.preventDefault();
+let handleVote = async function (field) {
 	let { election } = fields.data();
-	let votingPin = this.voting_pin.value;
-	this.voting_pin.value = "";
-	this.vote.disabled = true;
+	let votingPin = field.voting_pin.value;
+	field.voting_pin.value = "";
+	field.vote.disabled = true;
 	let data = new FormData(fields[0]);
 	data.append("voting_pin", votingPin);
 	data.append("election_id", election);
-	console.log(data);
+	data.append("vote", true);
+	try {
+		let vote = await $.ajax({
+			type: "POST",
+			url: "/src/request.php",
+			data: data,
+			dataType: "Json",
+			contentType: false,
+			processData: false,
+			cache: false,
+		});
+		console.log(vote);
+	} catch (error) {
+		console.error(error.responseText);
+	}
 };
 $("#checkVote").on("click", function () {
 	$(this).parents(".modal").modal("hide");
@@ -72,4 +85,7 @@ $("#votingPin").on("input", function () {
 
 $(".select-candidate").on("change", handleChangingCandidate);
 $("#confirmVoteButton").on("click", handleConfirmVote);
-$("#voting").on("submit", handleVote);
+$("#voting").on("submit", async function (e) {
+	e.preventDefault();
+	await handleVote(this);
+});

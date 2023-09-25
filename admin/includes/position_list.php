@@ -4,6 +4,7 @@ $searchedElection = $election($electionId)[0];
 if ($searchedElection["organization"] !==  $admin["organization"]) {
     redirect("/admin/positions.php");
 }
+$status = $searchedElection["election_status"];
 $positions = (new Positions)->fetchAll(["election" => $searchedElection["election_id"]]);
 $positions = (count($positions) > 0) ? json_decode($positions[0]["position"]) : [];
 
@@ -18,12 +19,15 @@ $positions = (count($positions) > 0) ? json_decode($positions[0]["position"]) : 
             <h5 class="title m-0">
                 Positions Available in <?= $searchedElection["election_name"] ?>
             </h5>
+
+            <?php if (strtolower($status) == "pending") { ?>
             <div class="top-action">
                 <button class="my-btn-primary" data-bs-toggle="modal" data-bs-target="#addPositionModal">
                     <i class="fas fa-plus-circle" aria-hidden="true"></i>
                     Add
                 </button>
             </div>
+            <?php }?>
         </div>
         <table class="table table-striped table-hover" id="memberList">
             <thead class="">
@@ -35,23 +39,28 @@ $positions = (count($positions) > 0) ? json_decode($positions[0]["position"]) : 
             </thead>
             <tbody class="">
                 <?php foreach ($positions as $key => $position) { ?>
-                    <tr>
-                        <td class="sn"><?= $key + 1 ?></td>
-                        <td><?= $position ?></td>
-                        <td class="action">
-                            <div>
-                                <button class="btn btn-sm btn-success" data-id="<?= $key ?>" data-name="<?= $position ?>" onclick="openEditModal(this)">
-                                    <i class="fa fa-edit" aria-hidden="true"></i>
-                                    <span class="tip">Edit</span>
-                                </button>
+                <tr>
+                    <td class="sn"><?= $key + 1 ?></td>
+                    <td><?= $position ?></td>
+                    <td class="action">
+                        <?php if (strtolower($status) == "pending") { ?>
+                        <div>
 
-                                <button class="btn btn-sm btn-danger" data-id="<?= $key ?>" data-name="<?= $position ?>" onclick="openDeleteModal(this)">
-                                    <i class="fa fa-trash-can" aria-hidden="true"></i>
-                                    <span class="tip">Delete</span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                            <button class="btn btn-sm btn-success" data-id="<?= $key ?>" data-name="<?= $position ?>" onclick="openEditModal(this)">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                                <span class="tip">Edit</span>
+                            </button>
+
+                            <button class="btn btn-sm btn-danger" data-id="<?= $key ?>" data-name="<?= $position ?>" onclick="openDeleteModal(this)">
+                                <i class="fa fa-trash-can" aria-hidden="true"></i>
+                                <span class="tip">Delete</span>
+                            </button>
+                        </div>
+                        <?php } else { ?>
+                        <p class="m-0 text-info">No Action</p>
+                        <?php } ?>
+                    </td>
+                </tr>
                 <?php } ?>
             </tbody>
         </table>

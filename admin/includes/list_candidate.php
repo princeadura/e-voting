@@ -8,6 +8,8 @@ if ($searchedElection["organization"] !==  $admin["organization"]) {
 $positions = (new Positions)->fetchAll(["election" => $searchedElection["election_id"]]);
 $positions = (count($positions) > 0) ? json_decode($positions[0]["position"]) : [];
 
+$status = $searchedElection["election_status"];
+
 $candidates = (new Candidates)->fetchAll(["election" => $searchedElection["election_id"]]);
 $allCandidates = (count($candidates) > 0) ?
     array_values((array) json_decode($candidates[0]["candidate"])) :
@@ -67,7 +69,7 @@ if (!in_array($position, $positions)) {
         </div>
     </div>
 </div>
-<?php if (isset($_GET["action"]) && $_GET["action"] === "add") { ?>
+<?php if (isset($_GET["action"]) && $_GET["action"] === "add" && strtolower($status) == "pending") { ?>
     <main class="add-candidate">
         <form action="" method="POST" id="addCandidateForm" data-position="<?= $position ?>" data-election-id="<?= $electionId ?>">
 
@@ -117,9 +119,12 @@ if (!in_array($position, $positions)) {
                     </div>
                 <?php } ?>
             </section>
-            <button type="submit" class="my-btn-primary" name="addCandidate">
-                Add <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
+
+            <?php if (strtolower($status) == "pending") { ?>
+                <button type="submit" class="my-btn-primary" name="addCandidate">
+                    Add <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            <?php } ?>
         </form>
     </main>
 <?php } else { ?>
@@ -133,9 +138,11 @@ if (!in_array($position, $positions)) {
                     </a>
                     <h5 class="m-0"><?= $position ?> Position Candidate(s)</h5>
 
-                    <a class="link-primary" href="/admin/candidate_list.php?election_id=<?= $electionId ?>&position=<?= $position ?>&action=add">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    </a>
+                    <?php if (strtolower($status) == "pending") { ?>
+                        <a class="link-primary" href="/admin/candidate_list.php?election_id=<?= $electionId ?>&position=<?= $position ?>&action=add">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </a>
+                    <?php } ?>
                 </div>
                 <div class="search">
                     <input type="search" name="" id="searchCandidate" placeholder="Search by Name" class="form-control">
@@ -147,16 +154,26 @@ if (!in_array($position, $positions)) {
                     <?php foreach ($candidates as $key => $candidate) { ?>
                         <?php $image = $candidate["img"] !== "" ? $candidate["img"] : "default.png"; ?>
                         <div class="candidate_select_wrapper">
-                            <input type="file" name="candidate_id<?= " " . $candidate["voter_id"] ?>" id="<?= $candidate["voter_id"] ?>_view" data-voter-id="<?= $candidate["voter_id"] ?>" class="candidate_image_input">
+
+                            <?php if (strtolower($status) == "pending") { ?>
+                                <input type="file" name="candidate_id<?= " " . $candidate["voter_id"] ?>" id="<?= $candidate["voter_id"] ?>_view" data-voter-id="<?= $candidate["voter_id"] ?>" class="candidate_image_input">
+
+                                <button class="btn btn-danger" type="button" data-remove-candidate="<?= $candidate["voter_id"] ?>" data-position="<?= $position ?>" data-election="<?= $electionId ?>">
+                                    <i class="fa fa-trash-alt" aria-hidden="true"></i>
+                                </button>
+                            <?php } ?>
                             <label for="<?= $candidate["voter_id"] ?>_view" class="detail-wrapper">
                                 <div class="mark">
                                     <i class="fas fa-check"></i>
                                 </div>
                                 <div class="candidate_image_wrapper">
                                     <img src="/assets/images/candidate_images/<?= $image ?>" class="candidate_image" alt="">
-                                    <p class="text m-0">
-                                        Click me to set candidate Image
-                                    </p>
+
+                                    <?php if (strtolower($status) == "pending") { ?>
+                                        <p class="text m-0">
+                                            Click me to set candidate Image
+                                        </p>
+                                    <?php } ?>
                                 </div>
                                 <div class="candidate_details">
                                     <p class="m-1 name">
@@ -171,9 +188,6 @@ if (!in_array($position, $positions)) {
                                     </p>
                                 </div>
                             </label>
-                            <button class="btn btn-danger" type="button" data-remove-candidate="<?= $candidate["voter_id"] ?>" data-position="<?= $position ?>" data-election="<?= $electionId ?>">
-                                <i class="fa fa-trash-alt" aria-hidden="true"></i>
-                            </button>
                         </div>
                     <?php } ?>
                 <?php } else { ?>

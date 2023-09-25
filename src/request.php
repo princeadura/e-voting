@@ -106,5 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if (isset($fields["deleteCandidate"])) {
         array_pop($fields);
         (new CandidateController($fields))->deleteCandidate();
+    } else if (isset($fields["vote"])) {
+        array_pop($fields);
+        // (new)
     }
 }

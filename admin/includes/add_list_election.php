@@ -6,9 +6,8 @@ if ($searchedElection["organization"] !==  $admin["organization"]) {
 }
 $positions = (new Positions)->fetchAll(["election" => $searchedElection["election_id"]]);
 $positions = (count($positions) > 0) ? json_decode($positions[0]["position"]) : [];
-$candidateDetails =  json_decode((new Candidates())->fetchAll([
-    "election" => $electionId
-])[0]["candidate"]);
+$candidateDetails = (new Candidates())->fetchAll(["election" => $electionId]);
+$candidateDetails = (count($candidateDetails) > 0) ?  json_decode($candidateDetails[0]["candidate"]) : [];
 
 ?>
 

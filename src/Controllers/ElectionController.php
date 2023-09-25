@@ -19,6 +19,8 @@ class ElectionController
         list($orgId) = (new Admins)->getMydetail("organization");
         $data = $this->fields;
         $data["organization"] = $orgId;
+        $data["election_start_date"] = (new DateTime($data["election_start_date"]))->modify("+8 hours")->format('Y-m-d H:i:s');
+        $data["election_end_date"] = (new DateTime($data["election_end_date"]))->modify("+23 hours 59 minutes")->format('Y-m-d H:i:s');
         $insert = (new Elections)->insert($data);
         if ($insert) {
             $res = ["message" => "Election Sucessfully Added", "status" => "success"];
@@ -42,15 +44,19 @@ class ElectionController
             echo json_encode($res);
             return;
         }
+        global $data;
+        $data = $this->fields;
+        $data["election_start_date"] = (new DateTime($data["election_start_date"]))->modify("+8 hours")->format('Y-m-d H:i:s');
+        $data["election_end_date"] = (new DateTime($data["election_end_date"]))->modify("+23 hours 59 minutes")->format('Y-m-d H:i:s');
         $election = function ($electionId) {
             $details = (new Elections)->fetchAll(["election_id" => $electionId])[0];
             if (strtolower($details["election_status"]) != "pending") {
-                unset($this->fields["election_start_date"]);
+                unset($GLOBALS["data"]["election_start_date"]);
             }
         };
-        $election($this->fields["election_id"]);
-        $update = (new Elections)->update($this->fields, [
-            "election_id" => $this->fields["election_id"],
+        $election($data["election_id"]);
+        $update = (new Elections)->update($data, [
+            "election_id" => $data["election_id"],
         ]);
         if ($update) {
             echo json_encode(["message" => "Details Sucessfully Updated", "status" => "success"]);
