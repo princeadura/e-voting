@@ -28,7 +28,7 @@ class CandidateController
         }
 
         $savedCandidates = array_values(array_map(function ($candidate) {
-            return ["voter_id" => $candidate, "img" => ""];
+            return ["voter_id" => $candidate, "img" => "", "votes" => 0];
         }, $candidates));
 
         $admin = array_filter((new Admins)->fetchAll([

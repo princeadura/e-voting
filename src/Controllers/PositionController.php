@@ -101,10 +101,11 @@ class PositionController
             'election' => $this->fields['election'],
             "organization" => $orgId
         ])[0]["position"];
-        $savedCandidates =  (array) json_decode((new Candidates())->fetchAll([
+        $savedCandidates = (new Candidates())->fetchAll([
             'election' => $this->fields['election'],
             "organization" => $orgId
-        ])[0]["candidate"]);
+        ]);
+        $savedCandidates = (count($savedCandidates) > 0) ? (array) json_decode($savedCandidates[0]["candidate"]) : [];
         $position = json_decode($savedPositions);
         $candidates = $savedCandidates;
         $positionName = $position[$this->fields["index_id"]];

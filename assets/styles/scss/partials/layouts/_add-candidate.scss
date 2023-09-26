@@ -1,35 +1,40 @@
-@use "./../components/responsive" as res;
+@use "./../components/responsive"as res;
+
 @mixin showText {
     .text {
         visibility: visible;
-        scale: 1;
+        scale     : 1;
     }
 }
+
 @mixin hideText {
     .text {
         visibility: hidden;
-        scale: 0;
+        scale     : 0;
     }
 }
+
 .add-candidate {
     .head {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
+        display           : flex;
+        flex-wrap         : wrap;
+        align-items       : center;
         // justify-content: space-between;
-        gap: 1rem;
-        position: sticky;
-        top: var(--admin-header-height);
-        z-index: 10;
-        padding: 1rem;
-        background: #ecf5f7;
-        box-shadow: 0 0 1rem 0.4rem var(--shadow);
-        justify-content: center;
+        gap               : 1rem;
+        position          : sticky;
+        top               : var(--admin-header-height);
+        z-index           : 10;
+        padding           : 1rem;
+        background        : #ecf5f7;
+        box-shadow        : 0 0 1rem 0.4rem var(--shadow);
+        justify-content   : center;
 
         .my-btn-primary {
             font-size: 1rem;
+
             span {
                 display: none;
+
                 @include res.responsiveMedia(md) {
                     display: inline-block;
                 }
@@ -41,154 +46,171 @@
         }
 
         .left {
-            gap: 0.5rem;
+            gap        : 0.5rem;
             align-items: center;
-            display: flex;
-            flex-grow: 0.5;
+            display    : flex;
+            flex-grow  : 0.5;
         }
 
         .search {
             flex-grow: 0.5;
-            position: relative;
+            position : relative;
 
             input {
-                outline: none;
-                width: 100%;
-                padding: 0.2em 1em;
+                outline      : none;
+                width        : 100%;
+                padding      : 0.2em 1em;
                 padding-right: 3em;
-                border: 0.1rem solid var(--primary);
+                border       : 0.1rem solid var(--primary);
                 border-radius: 0.25em;
+
                 &:focus {
                     box-shadow: 0 0 0 0.25em var(--primary--light);
                 }
             }
+
             .icon {
-                position: absolute;
-                right: 1em;
-                top: 50%;
+                position : absolute;
+                right    : 1em;
+                top      : 50%;
                 transform: translateY(-50%);
-                color: var(--primary);
+                color    : var(--primary);
             }
         }
     }
+
     .add-candidate-body {
-        padding: 1rem;
-        display: grid;
+        padding              : 1rem;
+        display              : grid;
         grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
-        gap: 1rem;
-        position: relative;
+        gap                  : 1rem;
+        position             : relative;
 
         @include res.responsiveMedia(md) {
             grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
         }
 
         .text-danger {
-            position: absolute;
-            padding: 1rem;
+            position    : absolute;
+            padding     : 1rem;
             justify-self: center;
         }
 
         .candidate_select_wrapper {
             word-break: break-all;
-            position: relative;
+            position  : relative;
 
             &.hide {
                 display: none;
             }
 
             .btn {
-                padding: 0.2em 0.5em !important;
+                padding : 0.2em 0.5em !important;
                 position: absolute;
-                top: 0.5rem;
-                left: 0.5rem;
+                top     : 0.5rem;
+                left    : 0.5rem;
+                z-index : 2;
             }
 
             .candidate_select {
                 position: absolute;
-                opacity: 0;
-                &:focus + .detail-wrapper {
+                opacity : 0;
+
+                &:focus+.detail-wrapper {
                     transform: scale(0.9);
+
                     .candidate_image {
                         box-shadow: none;
                     }
+
                     @include showText();
                 }
-                &:checked + .detail-wrapper {
+
+                &:checked+.detail-wrapper {
                     transform: scale(1);
+
                     .mark {
                         transform: scale(1);
                     }
+
                     @include hideText();
                 }
             }
 
             .candidate_image_input {
                 position: absolute;
-                opacity: 0;
-                &:focus + .detail-wrapper {
+                opacity : 0;
+
+                &:focus+.detail-wrapper {
                     transform: scale(0.9);
+
                     .candidate_image {
                         box-shadow: none;
                     }
+
                     @include showText();
                 }
             }
 
             .detail-wrapper {
-                cursor: pointer;
-                display: block;
-                width: 100%;
+                cursor    : pointer;
+                display   : block;
+                width     : 100%;
                 transition: 0.5s ease-in-out transform;
-                position: relative;
+                position  : relative;
 
                 &:hover {
                     transform: scale(0.9);
+
                     .candidate_image {
                         box-shadow: none;
                     }
+
                     @include showText();
                 }
 
                 .mark {
-                    position: absolute;
-                    width: 1.5em;
-                    aspect-ratio: 1/1;
-                    display: grid;
-                    top: 0.5rem;
-                    left: 0.5rem;
-                    background: linear-gradient(-45deg, var(--primary), var(--primary--dark), var(--primary--light));
-                    color: var(--accent);
+                    position     : absolute;
+                    width        : 1.5em;
+                    aspect-ratio : 1/1;
+                    display      : grid;
+                    top          : 0.5rem;
+                    left         : 0.5rem;
+                    background   : linear-gradient(-45deg, var(--primary), var(--primary--dark), var(--primary--light));
+                    color        : var(--accent);
                     border-radius: 0.25rem;
                     place-content: center;
-                    transform: scale(0);
-                    z-index: 10;
-                    transition: 0.5s ease-in-out transform;
+                    transform    : scale(0);
+                    z-index      : 10;
+                    transition   : 0.5s ease-in-out transform;
                 }
             }
 
             .candidate_image_wrapper {
                 position: relative;
+
                 .candidate_image {
-                    width: 100%;
+                    width        : 100%;
                     border-radius: 0.25rem;
-                    box-shadow: 0.4rem 0.3rem 0.2rem var(--primary--light);
-                    transition: 0.5s ease-in-out box-shadow;
+                    box-shadow   : 0.4rem 0.3rem 0.2rem var(--primary--light);
+                    transition   : 0.5s ease-in-out box-shadow;
                 }
+
                 .text {
-                    position: absolute;
+                    position     : absolute;
                     border-radius: 0.25rem;
-                    background: var(--primary);
-                    color: var(--accent);
-                    box-shadow: 0 0 0.4rem 0.2rem #0000002b;
-                    padding: 0.1rem 0.2rem;
-                    word-break: break-all;
-                    visibility: hidden;
-                    width: 90%;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    scale: 0;
-                    transition:
+                    background   : var(--primary);
+                    color        : var(--accent);
+                    box-shadow   : 0 0 0.4rem 0.2rem #0000002b;
+                    padding      : 0.1rem 0.2rem;
+                    word-break   : break-all;
+                    visibility   : hidden;
+                    width        : 90%;
+                    top          : 50%;
+                    left         : 50%;
+                    transform    : translate(-50%, -50%);
+                    scale        : 0;
+                    transition   :
                         0.25s ease-in-out visibility,
                         0.25s ease-in-out scale;
                     text-align: center;
@@ -197,9 +219,11 @@
 
             .candidate_details {
                 padding-top: 0.5rem;
+
                 span {
                     font-size: 0.9rem;
                 }
+
                 p {
                     line-height: 1;
                 }
@@ -209,24 +233,27 @@
 
     .my-btn-primary[type="submit"] {
         margin: 1rem;
-        float: right;
+        float : right;
     }
 }
 
 #addCandidateErrorModal {
     .modal-body {
         display: grid;
+
         .btn-close {
             justify-self: end;
         }
+
         .container-fluid {
-            display: grid;
+            display        : grid;
             justify-content: center;
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            text-align: center;
+            font-size      : clamp(1.5rem, 3vw, 2rem);
+            text-align     : center;
+
             .icon {
-                display: block;
-                font-size: clamp(4rem, 3vw, 6rem) !important;
+                display   : block;
+                font-size : clamp(4rem, 3vw, 6rem) !important;
                 text-align: center;
             }
         }

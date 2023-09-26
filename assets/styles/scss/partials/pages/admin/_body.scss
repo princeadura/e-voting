@@ -1,28 +1,33 @@
-@use "./../../components/responsive" as res;
+@use "./../../components/responsive"as res;
+
 body {
-    grid-template-areas: "header header header" "main main main" "footer footer footer";
-    grid-template-rows: auto 1fr auto;
+    grid-template-areas  : "header header header""main main main""footer footer footer";
+    grid-template-rows   : auto 1fr auto;
     grid-template-columns: auto 1fr;
-    overflow-x: hidden;
+    overflow-x           : hidden;
+
     @include res.responsiveMedia(md) {
-        grid-template-areas: "aside header header header" "aside main main main" "aside footer footer footer";
+        grid-template-areas: "aside header header header""aside main main main""aside footer footer footer";
     }
 }
 
 header {
     grid-area: header;
-    position: sticky;
-    top: 0;
+    position : sticky;
+    top      : 0;
 }
+
 aside {
-    height: 100vh;
-    grid-area: aside;
-    overflow: hidden;
+    height    : 100dvh;
+    grid-area : aside;
+    overflow  : hidden;
     overflow-y: auto;
 }
+
 main {
     grid-area: main;
 }
+
 footer {
     grid-area: footer;
 }

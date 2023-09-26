@@ -1,23 +1,28 @@
 * {
     scrollbar-width: thin;
 }
+
 ::-webkit-scrollbar {
-    width: 0.3rem;
+    width : 0.3rem;
     height: 0.3rem;
 }
+
 ::-webkit-scrollbar-thumb {
-    background: var(--primary);
+    background   : var(--primary);
     border-radius: 50px;
 }
+
 ::selection {
-    color: var(--dark);
+    color     : var(--dark);
     background: var(--background--dark);
 }
+
 html {
     scroll-behavior: smooth;
 }
+
 body {
-    min-height: 100vh;
+    min-height: 100dvh;
     background: var(--background--light);
-    display: grid;
+    display   : grid;
 }
