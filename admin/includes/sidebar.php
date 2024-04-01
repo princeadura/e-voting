@@ -28,12 +28,12 @@
                 </a>
             </li>
             <?php if ($admin["role"] == "head") { ?>
-            <li class="link-list">
-                <a href="/admin/admin_list.php" class="link <?= $page == "admin" ? "active" : "" ?>">
-                    <i class="fas fa-user-shield"></i>
-                    <span>Admin</span>
-                </a>
-            </li>
+                <li class="link-list">
+                    <a href="/admin/admin_list.php" class="link <?= $page == "admin" ? "active" : "" ?>">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Admin</span>
+                    </a>
+                </li>
             <?php } ?>
             <li class="link-list">
                 <a href="/admin/candidate_list.php" class="link  <?= $page == "candidate" ? "active" : "" ?>">
@@ -45,6 +45,12 @@
                 <a href="/admin/user_list.php" class="link  <?= $page == "user" ? "active" : "" ?>">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <span>Users(Voters)</span>
+                </a>
+            </li>
+            <li class="link-list">
+                <a href="/admin/election_result.php" class="link  <?= $page == "result" ? "active" : "" ?>">
+                    <i class="fas fa-list-ol" aria-hidden="true"></i>
+                    <span>Result(s)</span>
                 </a>
             </li>
         </ul>

@@ -22,7 +22,7 @@ require_once __DIR__ . '/./includes/election_list.php';
         <?php if (isset($_GET["election_id"]) && count($_GET) == 1) { ?>
             <?php require_once __DIR__ . '/./includes/position_list.php'; ?>
         <?php } else { ?>
-            <?php listElection("positions.php?") ?>
+            <?php listElection("positions.php?", "available positions") ?>
         <?php } ?>
     <?php } else { ?>
         <?php require_once __DIR__ . '/./includes/register_organization.php'; ?>

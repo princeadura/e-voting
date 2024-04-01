@@ -1,4 +1,4 @@
-@use "./../../components/responsive" as res;
+@use "./../../components/responsive"as res;
 
 .dashboard {
     padding: 1rem;
@@ -12,18 +12,29 @@
         margin-bottom: 2.5rem;
 
         .mycard {
-            --card-background: linear-gradient(45deg, var(--primary), var(--primary--light), var(--secondary));
+            --card-background: var(--accent);
+            --color: var(--primary);
+
+            display: grid;
+            row-gap: 1rem;
             box-shadow: 0 0 0.8rem 0.2rem #00000021;
             padding: 1rem;
             border-radius: 0.5rem;
-            display: grid;
-            row-gap: 1rem;
             background: var(--card-background);
             position: relative;
             text-decoration: none;
             transition: 0.5s linear transform;
             user-select: none;
             overflow: hidden;
+            border-left: .3rem groove var(--color);
+
+            &:nth-of-type(2) {
+                --color: var(--danger);
+            }
+
+            &:nth-of-type(3) {
+                --color: var(--success);
+            }
 
             &:hover {
                 transform: scale(0.9);
@@ -31,7 +42,7 @@
 
             .title {
                 grid-row: 2;
-                color: var(--accent);
+                color: var(--color);
             }
 
             .icon {
@@ -42,7 +53,7 @@
                 aspect-ratio: 1/1;
                 display: grid;
                 place-content: center;
-                color: var(--primary);
+                color: var(--color);
                 border-radius: 50%;
                 box-shadow: 0 0 0.8rem 0.2em #00000059;
                 transition: 0.5s ease-in-out color;
@@ -54,7 +65,7 @@
                 font-size: 1.2rem;
                 margin-bottom: 0 !important;
                 position: relative;
-                color: var(--accent);
+                color: var(--color);
                 word-wrap: break-word;
             }
         }

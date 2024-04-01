@@ -3,25 +3,39 @@
 require_once __DIR__ . '/./includes/head.php';
 $electionId = filter_var($_GET["election"], FILTER_SANITIZE_SPECIAL_CHARS);
 $searchedElection = $election($electionId)[0];
-if (($searchedElection["organization"] !==  $voter["organization"]) ||
+$candidate = (new Candidates)->fetchAll([
+    "election" => $searchedElection["election_id"]
+]);
+$position =  (new Positions)->fetchAll([
+    "election" => $searchedElection["election_id"]
+]);
+if (
+    ($searchedElection["organization"] !==  $voter["organization"]) ||
     $searchedElection["election_status"] !== "Ongoing"
 ) {
     redirect("/voters");
 }
-$candidates = json_decode(
-    (new Candidates)->fetchAll([
-        "election" => $searchedElection["election_id"]
-    ])[0]["candidate"],
+$candidates = count($candidate) > 0 ? json_decode(
+    $candidate[0]["candidate"],
     JSON_FORCE_OBJECT
-);
-$positions = json_decode(
-    (new Positions)->fetchAll([
-        "election" => $searchedElection["election_id"]
-    ])[0]["position"]
-);
+) : [];
+$positions = count($position) > 0 ? json_decode(
+    $position[0]["position"]
+) : [];
 $registeredCandidate = function ($voter_id) {
     return (new VoterController(["voter_id" => $voter_id]))->getLoggedInVoter()[0];
 };
+
+$voted = (new Voted())->fetchAll(["election" => $electionId]);
+
+if ($voted) {
+    $votedUsers = json_decode($voted[0]["voters"]);
+    $votingUser = $voter["voter_id"];
+    if (in_array($votingUser, $votedUsers)) {
+        redirect("/voters");
+    }
+}
+
 ?>
 <html lang="en">
 
@@ -74,10 +88,13 @@ $registeredCandidate = function ($voter_id) {
                                 <strong>Note:</strong> Provide your 4 digit voting pin.
                             </div>
                             <div class="floating_form">
-                                <input type="text" id="votingPin" name="voting_pin" class="form-control" placeholder="a">
+                                <input type="password" id="votingPin" name="voting_pin" class="form-control" placeholder="a">
                                 <label for="votingPin" class="floating_label">
                                     Voting Pin
                                 </label>
+                                <span class="show icon">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
                             </div>
                             <button class="btn my-btn-primary mt-3" disabled name="vote">
                                 <i class="fas fa-vote-yea"></i> vote
@@ -88,29 +105,33 @@ $registeredCandidate = function ($voter_id) {
             </div>
         </div>
 
+        <?php if (count($position) <= 0) { ?>
+        <h4 class="text-danger text-center"> No Record Found for the <b><?= $searchedElection["election_name"] ?> </b> </h4>
+        <?php } else { ?>
         <h4 class="vote-title"> Cast Your Vote Now for the <b><?= $searchedElection["election_name"] ?> </b> </h4>
         <form class="positions-wrapper" data-election="<?= $searchedElection["election_id"] ?>">
             <?php foreach ($positions as $position) { ?>
-                <?php if (isset($candidates[$position]) && count($candidates[$position]) > 0) { ?>
-                    <div class="candidate">
-                        <div class="top">
-                            <img src="/assets/images/candidate_images/default.png" alt="" class="candidate-image">
-                        </div>
-                        <p class="vote-title"><i><?= $position ?></i></p>
-                        <select class="form-select form-select-lg select-candidate" name="<?= $position ?>">
-                            <option selected value="">Select a Candidate</option>
-                            <?php foreach ($candidates[$position] as  $candidate) { ?>
-                                <?php $innerCandidate = $registeredCandidate($candidate["voter_id"]); ?>
-                                <option value="<?= $innerCandidate["voter_id"] ?>" data-img="<?= $candidate["img"] ?>">
-                                    <?= $innerCandidate["firstname"] . " " . $innerCandidate["lastname"] ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                <?php } ?>
+            <?php if (isset($candidates[$position]) && count($candidates[$position]) > 0) { ?>
+            <div class="candidate">
+                <div class="top">
+                    <img src="/assets/images/candidate_images/default.png" alt="" class="candidate-image">
+                </div>
+                <p class="vote-title"><i><?= $position ?></i></p>
+                <select class="form-select form-select-lg select-candidate" name="<?= $position ?>">
+                    <option selected value="">Select a Candidate</option>
+                    <?php foreach ($candidates[$position] as  $candidate) { ?>
+                    <?php $innerCandidate = $registeredCandidate($candidate["voter_id"]); ?>
+                    <option value="<?= $innerCandidate["voter_id"] ?>" data-img="<?= $candidate["img"] ?>">
+                        <?= $innerCandidate["firstname"] . " " . $innerCandidate["lastname"] ?>
+                    </option>
+                    <?php } ?>
+                </select>
+            </div>
+            <?php } ?>
             <?php } ?>
         </form>
         <button class="btn my-btn-primary" id="confirmVoteButton" disabled>Vote <i class="fas fa-vote-yea"></i></button>
+        <?php } ?>
     </main>
 
     <?php require_once __DIR__ . '/./includes/footer.php'; ?>

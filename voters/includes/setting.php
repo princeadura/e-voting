@@ -46,7 +46,7 @@ $resetPin = (new Content)->resetPin();
                                 <label for="<?= $field["name"] ?>" class="floating_label">
                                     <?= $field["label"] ?>
                                 </label>
-                                <?php if ($field["type"] == "password") { ?>
+                                <?php if ($field["type"] == "pass   qword") { ?>
                                     <span class="show icon">
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                     </span>

@@ -1,6 +1,8 @@
-@use "../../components/responsive" as res;
+@use "../../components/responsive"as res;
+
 .vote {
     padding: 1rem;
+
     .vote-title {
         color: var(--primary);
         text-align: center;
@@ -18,10 +20,13 @@
         grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--width)), 1fr));
         gap: 1rem;
         margin-bottom: 1rem;
+
         @include res.responsiveMedia(lg) {
             --width: 14rem;
         }
+
         .candidate {
+            display: grid;
             background: var(--accent);
             padding: 1rem;
             border-radius: 0.25rem;
@@ -31,23 +36,27 @@
                 text-align: start;
                 font-weight: bold;
             }
+
             .top {
                 border-radius: 0.25rem;
                 overflow: hidden;
                 aspect-ratio: 1/0.9;
             }
+
             &-image {
                 height: 100%;
                 width: 100%;
             }
         }
     }
+
     .btn {
         float: right;
     }
 
     .form-select {
         font-size: 1rem;
+
         &:focus {
             border-color: var(--primary--light);
             box-shadow: 0 0 0 0.3rem var(--primary--light);
@@ -57,11 +66,13 @@
     #confirmVote {
         .list-group {
             margin-bottom: 0.6rem;
+
             .list-group-item {
                 display: flex;
                 gap: 1rem;
                 flex-wrap: wrap;
                 font-size: clamp(1rem, 3vw, 1.2rem);
+
                 span {
                     &:first-of-type {
                         font-weight: bold;
