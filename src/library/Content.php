@@ -84,7 +84,7 @@ class Content
                 "label" => "Acount Password"
             ],
             [
-                "type" => "text",
+                "type" => "password",
                 "name" => "voting_pin",
                 "label" => "Pin"
             ]

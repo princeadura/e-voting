@@ -1,3 +1,5 @@
+import { loader, inputErrorFeedback, alert } from "./components/General.js";
+
 let fields = $(".positions-wrapper");
 let select = fields.find(".select-candidate");
 let selectedCandidateElement = $(".selected-candidate");
@@ -47,6 +49,10 @@ let handleConfirmVote = function () {
 };
 
 let handleVote = async function (field) {
+	let button = $(field.vote);
+	let htmlText = button.html();
+	button.html(loader);
+	$(this).find(".feedback").remove();
 	let { election } = fields.data();
 	let votingPin = field.voting_pin.value;
 	field.voting_pin.value = "";
@@ -65,8 +71,18 @@ let handleVote = async function (field) {
 			processData: false,
 			cache: false,
 		});
-		console.log(vote);
+		button.html(htmlText);
+		let message = vote.message;
+		if (vote.status == "success") {
+			$(field).prepend(alert(message, "success"));
+			setTimeout(() => {
+				location.href = "/voters?page=result";
+			}, 1000);
+		} else {
+			$(field).prepend(alert(message, "danger"));
+		}
 	} catch (error) {
+		button.html(htmlText);
 		console.error(error.responseText);
 	}
 };

@@ -97,7 +97,7 @@ $adminLink = ($admin["role"] == "head") ? "/admin/admin_list.php" : "";
                                         <td><?= ++$key ?></td>
                                         <td><?= $election["election_name"] ?></td>
                                         <td><?= $election["election_status"] ?></td>
-                                        <td> <a href="#" class="btn btn-primary"> <i class="fas fa-binoculars"></i> </a> </td>
+                                        <td> <a href="/admin/election_result.php?election_id=<?= $election["election_id"] ?>" class="btn my-btn-secondary"> <i class="fas fa-binoculars"></i> </a> </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

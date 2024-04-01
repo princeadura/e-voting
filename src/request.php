@@ -108,6 +108,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         (new CandidateController($fields))->deleteCandidate();
     } else if (isset($fields["vote"])) {
         array_pop($fields);
-        // (new)
+        (new VotedController($fields))->saveVotes();
+    } else if (isset($fields["getVotes"])) {
+        array_pop($fields);
+        (new VotedController($fields))->getVotes();
+    } else if (isset($fields["getElectionWinners"])) {
+        array_pop($fields);
+        (new VotedController($fields))->getElectionWinners();
     }
 }
