@@ -1,9 +1,8 @@
 <?php
 
-
 /**
  * Content
- * 
+ *
  * This class houses some details of markups that neeeds to be reusable, for insttance the fields in an input fields ...
  */
 class Content
@@ -12,7 +11,7 @@ class Content
      * choose
      *
      * @return array
-     * This method is responsible for the content why choose us section of the index page 
+     * This method is responsible for the content why choose us section of the index page
      */
     public function choose(): array
     {
@@ -20,25 +19,25 @@ class Content
             [
                 "title" => "Security",
                 "icon" => "fa-solid fa-shield",
-                "content" => "We offer you a secured voting experience where no one will be able to tamper with your votes and no one will know whom you voted for."
+                "content" => "We offer you a secured voting experience where no one will be able to tamper with your votes and no one will know whom you voted for.",
             ],
             [
                 "title" => "Reliability",
                 "icon" => "fas fa-handshake",
-                "content" => "We offer you a secured voting experience where no one will be able to tamper with your votes and no one will know whom you voted for."
+                "content" => "We offer you a secured voting experience where no one will be able to tamper with your votes and no one will know whom you voted for.",
             ],
             [
                 "title" => "Swiftness",
                 "icon" => "fas fa-fighter-jet",
-                "content" => "We offer you a fast application where by you will be receving election update on the go."
-            ]
+                "content" => "We offer you a fast application where by you will be receving election update on the go.",
+            ],
         ];
     }
     /**
      * loginFields
      *
      * @return array
-     * This methods is reponsible for the details of the login form fields 
+     * This methods is reponsible for the details of the login form fields
      */
     public function loginFields(): array
     {
@@ -46,13 +45,13 @@ class Content
             [
                 "type" => "text",
                 "name" => "username",
-                "label" => "Username"
+                "label" => "Username",
             ],
             [
                 "type" => "password",
                 "name" => "password",
-                "label" => "Password"
-            ]
+                "label" => "Password",
+            ],
         ];
     }
 
@@ -62,17 +61,17 @@ class Content
             [
                 "type" => "password",
                 "name" => "old_password",
-                "label" => "Old Password"
+                "label" => "Old Password",
             ],
             [
                 "type" => "password",
                 "name" => "password",
-                "label" => "New Password"
-            ],  [
+                "label" => "New Password",
+            ], [
                 "type" => "password",
                 "name" => "confirm_password",
-                "label" => "Confirm Password"
-            ]
+                "label" => "Confirm Password",
+            ],
         ];
     }
     public function resetPin(): array
@@ -81,13 +80,13 @@ class Content
             [
                 "type" => "password",
                 "name" => "password",
-                "label" => "Acount Password"
+                "label" => "Acount Password",
             ],
             [
                 "type" => "password",
                 "name" => "voting_pin",
-                "label" => "Pin"
-            ]
+                "label" => "Pin",
+            ],
         ];
     }
 
@@ -97,41 +96,40 @@ class Content
             [
                 "type" => "text",
                 "name" => "firstname",
-                "label" => "First Name"
+                "label" => "First Name",
             ],
             [
                 "type" => "text",
                 "name" => "lastname",
-                "label" => "Last Name"
+                "label" => "Last Name",
             ],
             [
                 "type" => "text",
                 "name" => "middlename",
-                "label" => "Middle Name"
+                "label" => "Middle Name",
             ],
             [
                 "type" => "email",
                 "name" => "email",
-                "label" => "Email"
+                "label" => "Email",
             ],
             [
                 "type" => "text",
                 "name" => "username",
-                "label" => "Username"
+                "label" => "Username",
             ],
             [
                 "type" => "password",
                 "name" => "password",
-                "label" => "Password"
+                "label" => "Password",
             ],
             [
                 "type" => "password",
                 "name" => "confirm_password",
-                "label" => "Confirm Password"
+                "label" => "Confirm Password",
             ],
         ];
     }
-
 
     public function electionFields()
     {
@@ -158,11 +156,11 @@ class Content
     {
         return [
             [
-                "img" => "me.jpg",
+                "img" => "default.png",
                 "link_w" => "#",
                 "link_t" => "#",
                 "link_f" => "#",
-                "name" => "Abdul-Azeez Abdul-Azeem",
+                "name" => "mysticDev",
                 "role" => "Lead Developer",
             ],
         ];

@@ -31,7 +31,7 @@ require_once __DIR__ . '/./includes/election_list.php';
     <?php require_once __DIR__ . '/.././includes/script.php'; ?>
 
     <?php if (isset($_GET["election_id"]) && count($_GET) == 1) { ?>
-        <script src="http://localhost:100/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="/assets/scripts/result.js"></script>
     <?php } ?>
 </body>
