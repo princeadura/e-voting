@@ -3,7 +3,7 @@
 <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/r-2.5.0/datatables.min.css" rel="stylesheet">
 <?php
 if ($group == "landing") {
-    echo '<link rel="stylesheet" href="./../assets/styles/css/landing.css">';
+    echo '<link rel="stylesheet" href="../../assets/styles/css/landing.css">';
 } else if ($group == "admin") {
     echo '<link rel="stylesheet" href="./../assets/styles/css/admin.css">';
 } else if ($group == "voters") {

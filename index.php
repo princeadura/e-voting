@@ -12,7 +12,8 @@ $choose = (new Content)->choose();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>E-voting Platform</title>
+    <link rel="stylesheet" href="./assets/styles/css/landing.css">
     <?php require_once __DIR__ . '/./includes/style.php'; ?>
 </head>
 
@@ -22,7 +23,7 @@ $choose = (new Content)->choose();
         <section class="hero">
             <div class="container">
                 <div class="hero-left">
-                    <h1 class="hero-welcome">Welcome to the evolving evoting system</h1>
+                    <h1 class="hero-welcome">Welcome to ACOMS e-voting system</h1>
                     <h3> Where we provide your with secured, fast and reliable voting experience without need to panic that your vote would be compromised.</h3>
                     <div class="my-btn-group">
                         <?= setVoterButton() ?>
@@ -37,7 +38,7 @@ $choose = (new Content)->choose();
 
         <section class="why-us">
             <div class="container">
-                <h2 class="why-us-title mb-4">Why Choose Us</h2>
+                <h2 class="why-us-title mb-4">OUR SYSTEM</h2>
 
                 <div class="offers">
                     <?php foreach ($choose as $item) { ?>
