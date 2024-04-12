@@ -4,7 +4,7 @@
         <i class="fa fa-angle-up" aria-hidden="true"></i>
     </button>
 
-    <div class="container">
+ <!--   <div class="container">
         <form action="#" class="contact">
             <h4 class="">Contact Us</h4>
             <div class="fields">
@@ -26,6 +26,7 @@
             </button>
         </form>
     </div>
+-->
     <div class="footer-bottom">
         <h5 class="m-0"> &copy; <?= (new DateTime())->format("Y") ?> WebSaint </h5>
         <div class="right">

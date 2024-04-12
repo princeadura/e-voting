@@ -23,12 +23,19 @@ $form = (new Content)->loginFields();
                     <a href="/about.php" class="link-primary nav-link-primary  <?= $page == "about" ? "active" : "" ?> ">About</a>
                 </li>
                 <li class="link-list">
-                    <a href="#" class="link-primary nav-link-primary  <?= $page == "services" ? "active" : "" ?> ">Services</a>
+                    <a href="#" class="link-primary nav-link-primary  <?= $page == "services" ? "active" : "" ?> ">Profile</a>
                 </li>
                 <li class="link-list">
                     <?= setVoterButton() ?>
                 </li>
-            </ul>
+            </ul
+            
+            
+            
+            
+            
+            
+            >
         </div>
     </div>
 </header>
